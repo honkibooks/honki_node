@@ -10,7 +10,7 @@ router.use((req, res, next)=>{
 });
 
 const listHandler = async(req)=>{
-    const perPage = 2;
+    const perPage = 16;
     const [t_rows]=await db.query("SELECT COUNT(1) num FROM `book_product` ");
     const totalRows = t_rows[0].num;
     const totalPages = Math.ceil(totalRows/perPage);
