@@ -6,6 +6,7 @@ const db = require(__dirname+'/../modules/db_connect');
 const getProductData = async(req)=>{
     // 初始值
     const output ={
+        c_rows:[],
         page:0,
         perPage:16,
         totalRows:0,
@@ -81,6 +82,8 @@ const getProductData = async(req)=>{
         }
         [output.rows]=await db.query("SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE 1 " + sql + sorts_sql + " LIMIT ?, ?", [(output.page-1)* output.perPage, output.perPage]);
     }
+    const [category_rows] = await db.query("SELECT * FROM book_categories ")
+    output.c_rows = category_rows;
 
     return output
 };
