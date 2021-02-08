@@ -3,46 +3,92 @@ const router = express.Router();
 const db = require(__dirname+'/../modules/db_connect');
 
 
-router.use((req, res, next)=>{
-    res.locals.baseUrl = req.baseUrl;
-    res.locals.url = req.url;
-    next();
-});
+const getProductData = async(req)=>{
+    // 初始值
+    const output ={
+        page:0,
+        perPage:16,
+        totalRows:0,
+        totalPages:0,
+        rows:[],
+        pages:[]
+    };
 
-const listHandler = async(req)=>{
-    const perPage = 16;
-    const [t_rows]=await db.query("SELECT COUNT(1) num FROM `book_product` ");
-    const totalRows = t_rows[0].num;
-    const totalPages = Math.ceil(totalRows/perPage);
+    // output sql
+    let sql= "";
+    let sorts_sql = "";
+    
+    // 分類
+    const category = req.query.category;
+    // 搜尋
+    const search = req.query.search;
+    // 排序
+    const sorts = req.query.sorts; 
 
-    let page=parseInt(req.query.page) || 1;
+    const category_sql = `AND c.category_sid=`+category;
+    const search_sql = `AND p.title LIKE '%${search}%' OR p.title_eng LIKE '%${search}%' OR p.publication LIKE '%${search}%' OR p.author LIKE '%${search}%' `;
 
-    let rows=[];
-    if(totalRows>0){
-        if(page<1)page=1;
-        if(page>totalPages) page=totalPages;
-        [rows]=await db.query("SELECT * FROM `book_product` ORDER BY `sid` DESC LIMIT ?, ?", [(page-1)* perPage, perPage]);
+    category ? sql += category_sql: sql; 
+    search ? sql += search_sql:sql
+    
+    switch(sorts){
+        // final_price 價格排序
+        case 'priceDESC':
+            sorts_sql = ` ORDER BY p.final_price DESC `;
+            break;
+        case 'priceASC':
+            sorts_sql = ` ORDER BY p.final_price ASC `;
+            break;
+        // discount 折數排序
+        case 'discountDESC':
+            sorts_sql = ` ORDER BY p.discount DESC `;
+            break;
+        case 'discountASC':
+            sorts_sql = ` ORDER BY p.discount ASC `;
+            break;
+        // pub_year 出版年份排序
+        case 'pubyearDESC':
+            sorts_sql = ` ORDER BY p.pub_year DESC `;
+            break;
+        case 'pubyearASC':
+            sorts_sql = ` ORDER BY p.pub_year ASC `;
+            break;
+        // stars 星等排序
+        case 'starsDESC':
+            sorts_sql = ` ORDER BY p.stars DESC `;
+            break;
+        case 'starsASC':
+            sorts_sql = ` ORDER BY p.stars ASC `;
+            break;
+        // 預設
+        default:
+            sorts_sql = ` ORDER BY p.created_at DESC `;
     }
 
-    return {
-        perPage,
-        totalRows,
-        totalPages,
-        page,
-        rows,
+    const [total_rows] = await db.query("SELECT COUNT(1) num FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE 1 " + sql )
+    output.totalRows = total_rows[0].num;
+
+    if(output.totalRows > 0){
+        output.totalPages = Math.ceil(output.totalRows/output.perPage);
+
+        let page=parseInt(req.query.page) || 1;
+        if (page < 1 ) {
+            output.page = 1
+        } else if(page>output.totalPages){
+             output.page = output.totalPages;
+        } else {
+            output.page = page;
+        }
+        [output.rows]=await db.query("SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE 1 " + sql + sorts_sql + " LIMIT ?, ?", [(output.page-1)* output.perPage, output.perPage]);
     }
+
+    return output
 };
 
 
-// router.get('/lifestyle',async(req,res)=>{
-//     const [rows, fields] = await db.query("SELECT * FROM `book_product` WHERE `category_sid` = 1");
-//     res.json(rows);
-// }
-// )
 
-
-router.get('/list', async (req, res)=>{
-    const output = await listHandler(req);
+router.get('/', async (req, res)=>{
+    const output = await getProductData(req);
     res.json(output);
 })
 
