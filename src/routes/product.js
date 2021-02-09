@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require(__dirname+'/../modules/db_connect');
 
 
-const getProductData = async(req)=>{
+const getProductList = async(req)=>{
     // 初始值
     const output ={
         c_rows:[],
@@ -89,10 +89,17 @@ const getProductData = async(req)=>{
 };
 
 
-
+// 列表頁資料
 router.get('/', async (req, res)=>{
-    const output = await getProductData(req);
+    const output = await getProductList(req);
     res.json(output);
+})
+
+// 商品內頁資料
+router.get('/:sid?',async(req,res)=>{
+    const sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid=?";
+    const [output] =await db.query(sql,[req.params.sid]);
+    res.json(output[0]);
 })
 
 module.exports = router;
