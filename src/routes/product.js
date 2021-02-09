@@ -14,24 +14,31 @@ const getProductList = async(req)=>{
         rows:[],
         pages:[]
     };
-
-    // output sql
-    let sql= "";
-    let sorts_sql = "";
     
+
+    // where 條件系列（分類、搜尋、篩選）-----------
+    let sql= "";
     // 分類
     const category = req.query.category;
     // 搜尋
     const search = req.query.search;
-    // 排序
-    const sorts = req.query.sorts; 
+    // 價格區間
+    const minPrice = req.query.minPrice;
+    const maxPrice = req.query.maxPrice;
 
     const category_sql = `AND c.category_sid=`+category;
     const search_sql = `AND p.title LIKE '%${search}%' OR p.title_eng LIKE '%${search}%' OR p.publication LIKE '%${search}%' OR p.author LIKE '%${search}%' `;
+    const price_sql=`AND p.final_price BETWEEN ${minPrice ? minPrice : 0} AND ${maxPrice ? maxPrice : 10000} `;
 
     category ? sql += category_sql: sql; 
-    search ? sql += search_sql:sql
+    search ? sql += search_sql:sql;
+    (minPrice || maxPrice) ? sql += price_sql: sql;
     
+
+    // order by 系列 -----------
+    let sorts_sql = "";
+    // 排序
+    const sorts = req.query.sorts; 
     switch(sorts){
         // final_price 價格排序
         case 'priceDESC':
@@ -97,7 +104,7 @@ router.get('/', async (req, res)=>{
 
 // 商品內頁資料
 router.get('/:sid?',async(req,res)=>{
-    const sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid=?";
+    const sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid=? ";
     const [output] =await db.query(sql,[req.params.sid]);
     res.json(output[0]);
 })
