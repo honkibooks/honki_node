@@ -19,14 +19,16 @@ const getProductList = async(req)=>{
     // where 條件系列（分類、搜尋、篩選）-----------
     let sql= "";
     // 分類
-    const category = req.query.category;
+    // const category = req.query.category;
+    const category = req.params.category;
     // 搜尋
     const search = req.query.search;
     // 價格區間
     const minPrice = req.query.minPrice;
     const maxPrice = req.query.maxPrice;
 
-    const category_sql = `AND c.category_sid=`+category;
+    // const category_sql = `AND c.category_sid=`+category;
+    const category_sql = `AND c.eng_name='${category}'`;
     const search_sql = `AND p.title LIKE '%${search}%' OR p.title_eng LIKE '%${search}%' OR p.publication LIKE '%${search}%' OR p.author LIKE '%${search}%' `;
     const price_sql=`AND p.final_price BETWEEN ${minPrice ? minPrice : 0} AND ${maxPrice ? maxPrice : 10000} `;
 
@@ -79,7 +81,7 @@ const getProductList = async(req)=>{
     if(output.totalRows > 0){
         output.totalPages = Math.ceil(output.totalRows/output.perPage);
 
-        let page=parseInt(req.query.page) || 1;
+        let page = parseInt(req.query.page) || 1;
         if (page < 1 ) {
             output.page = 1
         } else if(page>output.totalPages){
@@ -95,6 +97,10 @@ const getProductList = async(req)=>{
     return output
 };
 
+router.get('/:category', async (req, res)=>{
+    const output = await getProductList(req);
+    res.json(output);
+})
 
 // 列表頁資料
 router.get('/', async (req, res)=>{
@@ -103,7 +109,7 @@ router.get('/', async (req, res)=>{
 })
 
 // 商品內頁資料
-router.get('/:sid?',async(req,res)=>{
+router.get('/book/:sid?',async(req,res)=>{
     const sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid=? ";
     const [output] =await db.query(sql,[req.params.sid]);
     res.json(output[0]);
