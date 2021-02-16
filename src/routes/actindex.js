@@ -1,10 +1,89 @@
 const express = require('express');
+const { stringify } = require('uuid');
 const router = express.Router();
 const db = require(__dirname + '/../modules/db_connect');
 
+// 熱門活動
+router.get('/hot', async(req, res)=>{
+    const sql_hot_l = "SELECT * FROM `event` WHERE `act_sid` IN ("
+    const sql_hot_r = ") ORDER BY `act_sid` DESC"
 
+    //宣告亂數的function
+    function getRandom(x){
+        return Math.floor(Math.random()*x)+1;
+    };
+    //首先我們先宣告一個字串，用來裝要回傳的結果
+    let status = "";
+    //再來寫產生號碼的function
+    function getPowerNum(){
+        //宣告一個變數用來裝隨機產生的數字
+        let n = 0;
+        //卡片有6個所以我們讓迴圈跑六次
+        for(i=0;i<=5;i++){
+            //用indexOf判斷該數字之前有沒有出現過
+            n = getRandom(154);
+            if(status.indexOf(n)>0){
+            //如果有出現過就重跑一次迴圈
+            i-=1;
+            continue;
+            }
+            else{
+            //沒出現過的話就寫進字串裡
+            status += n + ',';
+            };
+        };
+    };
 
-router.get('/', async(req,res)=>{
+    getPowerNum();
+    
+    console.log(status.slice(0,-1))
+
+    let rows = [];
+    rows = await db.query(sql_hot_l + status.slice(0,-1) + sql_hot_r);
+    
+    res.json({rows})
+    // console.log(rows)
+})
+
+// 最新活動
+router.get('/new', async(req, res)=>{
+    // 北部地區
+    const north = "SELECT * FROM `event` WHERE `act_city_sid` <= 7 AND `act_city_sid` !=4 ORDER BY `act_sid` DESC limit 2"
+    // 中部地區
+    const medium = "SELECT * FROM `event` WHERE `act_city_sid` IN (8,9,10,11,14) ORDER BY `act_sid` DESC limit 2"
+    // 南部地區
+    const south = "SELECT * FROM `event` WHERE `act_city_sid` IN (12,13,15,16,17,22) ORDER BY `act_sid` DESC limit 2"
+    // 東部地區
+    const east = "SELECT * FROM `event` WHERE `act_city_sid` IN (4,18,19) ORDER BY `act_sid` DESC limit 2"
+
+    let selectCity = "";
+    const changeCity = req.query.changeCity;
+    switch(changeCity){
+        case 'north':
+            selectCity = north;
+            break;
+        case 'medium':
+            selectCity = medium;
+            break;
+        case 'south':
+            selectCity = south;
+            break;
+        case 'east':
+            selectCity = east;
+            break;
+        default:
+            selectCity = north;
+    }
+    console.log(selectCity)
+
+    let rows = [];
+    [rows]=await db.query(selectCity);
+    
+    res.json({rows})
+})
+
+// 總活動列表
+router.get('/', async(req, res)=>{
     const perPage = 16;
     const [t_rows]=await db.query("SELECT COUNT(1) num FROM `event`");
     const totalRows = t_rows[0].num;
@@ -14,7 +93,7 @@ router.get('/', async(req,res)=>{
     // 分類：講座
     const talk = "SELECT * FROM `event` WHERE `act_class_sid` = 1 ORDER BY `act_sid` DESC";
     // 分類：讀書會
-    const book_club = "SELECT * FROM `event` WHERE `act_class_sid` = 1 ORDER BY `act_sid` DESC";
+    const book_club = "SELECT * FROM `event` WHERE `act_class_sid` = 2 ORDER BY `act_sid` DESC";
     // 分類：戶外探索
     const outdoor = "SELECT * FROM `event` WHERE `act_class_sid` = 3 ORDER BY `act_sid` DESC";
     // 分類：休閒活動
@@ -52,7 +131,7 @@ router.get('/', async(req,res)=>{
     }
     console.log(selectClass)
 
-    // 取得總活動列表
+
     // 如果query沒有頁數，就用1
     let rows = [];
     let page = parseInt(req.query.page) || 1;
@@ -71,6 +150,7 @@ router.get('/', async(req,res)=>{
     });
 });
 
+// 詳細活動內容頁面
 router.get('/event/:sid?', async (req, res)=>{
     const [rows] = await db.query("SELECT * FROM `event` WHERE `act_sid` = ?", [req.params.sid]);
     res.json(rows);
