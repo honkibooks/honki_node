@@ -36,10 +36,10 @@ router.get('/hot', async(req, res)=>{
 
     getPowerNum();
     
-    console.log(status.slice(0,-1))
+    // console.log(status.slice(0,-1))
 
     let rows = [];
-    rows = await db.query(sql_hot_l + status.slice(0,-1) + sql_hot_r);
+    [rows] = await db.query(sql_hot_l + status.slice(0,-1) + sql_hot_r);
     
     res.json({rows})
     // console.log(rows)
@@ -74,7 +74,7 @@ router.get('/new', async(req, res)=>{
         default:
             selectCity = north;
     }
-    console.log(selectCity)
+    // console.log(selectCity)
 
     let rows = [];
     [rows]=await db.query(selectCity);
