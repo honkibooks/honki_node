@@ -12,9 +12,16 @@ const app = express();
 //     next();
 // });
 
-router.get('/',(req, res) => {
-    res.send('normal-index測試');
-});
+// router.get('/',(req, res) => {
+//     res.send('normal-index測試');
+// });
+
+router.get("/", async (req, res) => {
+    const [rows, fields] = await db.query(
+      "SELECT * FROM `secondhand_normalchange`"
+    );
+    res.json(rows);
+  });
 
 const getListData = async (req)=>{
     const perPage = 10;
