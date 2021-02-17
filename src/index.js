@@ -24,7 +24,7 @@ app.get('/',async(req,res)=>{
 //hans區
 
 //jill區
-
+app.use("/normal-index", require(__dirname + "/routes/normal-index"));
 //wei區
 app.use('/product',require(__dirname + '/routes/product'));
 //yen區
