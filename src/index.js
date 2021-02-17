@@ -12,7 +12,7 @@ app.use(express.json());
 
 
 // test 首頁抓二手書隨機資料 json格式
-app.get('/',async(req,res)=>{
+app.get('/', async(req,res)=>{
     const [rows, fields]=await db.query("SELECT * FROM `secondhand_randomchange`")
     res.json(rows);
 })
@@ -28,7 +28,7 @@ app.use('/cart',require(__dirname + '/routes/cart'));
 //wei區
 app.use('/product',require(__dirname + '/routes/product'));
 //yen區
-
+app.use('/activity',require(__dirname + '/routes/actindex'))
 //yu區
 
 
