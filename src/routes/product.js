@@ -6,13 +6,13 @@ const db = require(__dirname+'/../modules/db_connect');
 const getProductList = async(req)=>{
     // 初始值
     const output ={
+        avgPrice:0,
         c_rows:[],
         page:0,
         perPage:16,
         totalRows:0,
         totalPages:0,
         rows:[],
-        pages:[]
     };
     
 
@@ -72,8 +72,12 @@ const getProductList = async(req)=>{
             break;
         // 預設
         default:
-            sorts_sql = ` ORDER BY p.created_at DESC `;
+            sorts_sql = (minPrice || maxPrice) ?  ` ORDER BY p.final_price ASC ` : ` ORDER BY p.sid DESC `;
     }
+
+    const avgPrice = await db.query("SELECT AVG(p.final_price) AS avg FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE 1 " + sql )
+
+    output.avgPrice = Math.round(+avgPrice[0][0].avg);
 
     const [total_rows] = await db.query("SELECT COUNT(1) num FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE 1 " + sql )
     output.totalRows = total_rows[0].num;
@@ -114,5 +118,6 @@ router.get('/book/:sid?',async(req,res)=>{
     const [output] =await db.query(sql,[req.params.sid]);
     res.json(output[0]);
 })
+
 
 module.exports = router;
