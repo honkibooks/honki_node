@@ -91,17 +91,17 @@ router.get('/', async(req, res)=>{
 
     // 排序
     // 分類：講座
-    const talk = "SELECT * FROM `event` WHERE `act_class_sid` = 1 ORDER BY `act_sid` DESC";
+    const talk = "SELECT * FROM `event` WHERE `act_class_sid` = 1 ORDER BY `act_sid` DESC LIMIT ?, ?";
     // 分類：讀書會
-    const book_club = "SELECT * FROM `event` WHERE `act_class_sid` = 2 ORDER BY `act_sid` DESC";
+    const book_club = "SELECT * FROM `event` WHERE `act_class_sid` = 2 ORDER BY `act_sid` DESC LIMIT ?, ?";
     // 分類：戶外探索
-    const outdoor = "SELECT * FROM `event` WHERE `act_class_sid` = 3 ORDER BY `act_sid` DESC";
+    const outdoor = "SELECT * FROM `event` WHERE `act_class_sid` = 3 ORDER BY `act_sid` DESC LIMIT ?, ?";
     // 分類：休閒活動
-    const hang_out = "SELECT * FROM `event` WHERE `act_class_sid` = 4 ORDER BY `act_sid` DESC";
+    const hang_out = "SELECT * FROM `event` WHERE `act_class_sid` = 4 ORDER BY `act_sid` DESC LIMIT ?, ?";
     // 分類：活動地區
-    const area = "SELECT * FROM `event` WHERE `act_class_sid` = 5 ORDER BY `act_sid` DESC";
+    const area = "SELECT * FROM `event` WHERE `act_sid` ORDER BY `act_city_sid` ASC";
     // 分類：節氣推薦
-    const recommend = "SELECT * FROM `event` WHERE `act_class_sid` = 6 ORDER BY `act_sid` DESC";
+    const recommend = "SELECT * FROM `event` WHERE `act_class_sid` = 6 ORDER BY `act_sid` DESC LIMIT ?, ?";
     // 預設
     const all = "SELECT * FROM `event` ORDER BY `event`.`act_sid` DESC LIMIT ?, ?"
 
