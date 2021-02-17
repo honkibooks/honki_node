@@ -18,7 +18,7 @@ app.get('/', async(req,res)=>{
 })
 
 //aw區
-
+app.use('/cart',require(__dirname + '/routes/cart'));
 //chia區
 
 //hans區
