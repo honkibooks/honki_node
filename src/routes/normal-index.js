@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require(__dirname+'/../modules/db_connect');
-const app = express();
 
 // router.use((req, res, next)=>{
 //     if(!req.session.admin){
@@ -12,8 +11,10 @@ const app = express();
 //     next();
 // });
 
-router.get('/',(req, res) => {
-    res.send('normal-index測試');
+router.get('/', async (req, res) => {
+    // res.send('normal-index測試');
+    const [rows, fields]=await db.query("SELECT * FROM `secondhand_randomchange`")
+    res.json(rows);
 });
 
 const getListData = async (req)=>{
