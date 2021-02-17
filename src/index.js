@@ -1,24 +1,25 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const express = require('express');
-const db = require(__dirname + '/modules/db_connect');
+const express = require("express");
+const db = require(__dirname + "/modules/db_connect");
 
 const app = express();
 const cors = require("cors");
 
 app.use(cors());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-
 // test 首頁抓二手書隨機資料 json格式
-app.get('/', async(req,res)=>{
-    const [rows, fields]=await db.query("SELECT * FROM `secondhand_randomchange`")
-    res.json(rows);
-})
+app.get("/", async (req, res) => {
+  const [rows, fields] = await db.query(
+    "SELECT * FROM `secondhand_randomchange`"
+  );
+  res.json(rows);
+});
 
 //aw區
-app.use('/cart',require(__dirname + '/routes/cart'));
+app.use("/cart", require(__dirname + "/routes/cart"));
 //chia區
 
 //hans區
@@ -26,25 +27,25 @@ app.use('/cart',require(__dirname + '/routes/cart'));
 //jill區
 app.use("/normal-index", require(__dirname + "/routes/normal-index"));
 //wei區
-app.use('/product',require(__dirname + '/routes/product'));
+app.use("/product", require(__dirname + "/routes/product"));
 //yen區
-app.use('/activity',require(__dirname + '/routes/actindex'));
+app.use("/activity", require(__dirname + "/routes/actindex"));
 //yu區
-app.use('/member',require(__dirname + '/routes/member'));
+// app.use('/member',require(__dirname + '/routes/member'));
 
-
-
-app.get('/try-db', async(req, res)=>{
-    const [rows, fields] = await db.query("SELECT * FROM `book_product` ORDER BY `sid` DESC LIMIT 6");
-    res.json(rows);
-})
+app.get("/try-db", async (req, res) => {
+  const [rows, fields] = await db.query(
+    "SELECT * FROM `book_product` ORDER BY `sid` DESC LIMIT 6"
+  );
+  res.json(rows);
+});
 // 404 找不到網頁
-app.use((req,res)=>{
-    res.type('text/plain');
-    res.status(404).send('404-找不到網頁')
-})
+app.use((req, res) => {
+  res.type("text/plain");
+  res.status(404).send("404-找不到網頁");
+});
 
 const port = process.env.PORT || 3000;
-app.listen(port, ()=>{
-    console.log(`port: ${port}`)
-})
+app.listen(port, () => {
+  console.log(`port: ${port}`);
+});
