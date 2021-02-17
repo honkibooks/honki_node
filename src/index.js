@@ -28,8 +28,10 @@ app.use("/normal-index", require(__dirname + "/routes/normal-index"));
 //wei區
 app.use('/product',require(__dirname + '/routes/product'));
 //yen區
-app.use('/activity',require(__dirname + '/routes/actindex'))
+app.use('/activity',require(__dirname + '/routes/actindex'));
 //yu區
+app.use('/member',require(__dirname + '/routes/member'));
+
 
 
 app.get('/try-db', async(req, res)=>{
