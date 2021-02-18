@@ -51,14 +51,14 @@ router.post('/add', async (req, res) => {
     const [{ Rows, insertRows }] = await db.query(sql, [data]);
 
     res.json({
-        success: !!Rows,
+        success: !Rows,
         Rows,
         insertRows
     });
 })
 
 
-// 在POSTMAN用下面JSON資料測試ADD可以進資料庫，但success是false
+// 在POSTMAN用下面JSON資料測試ADD可以進資料庫
 // {
 //     "ISBN":"9854621359453",
 //     "book_name":"測試5號",
@@ -93,7 +93,31 @@ router.delete('/delete/:c_sid', async (req, res) => {
 
 
 
-
+router.post("/picture-upload", upload2.single("avatar"), async (req, res) => {
+    const output = {
+      success: false,
+      message: "",
+    };
+    console.log("req", req.body.sid);
+  
+    sid = req.body.sid;
+  
+    const sql = "UPDATE `members` SET `profile_picture`=? WHERE sid=?";
+  
+    const [{ affectedRows, changedRows }] = await db.query(sql, [
+      req.file.filename,
+      sid,
+    ]);
+  
+    if (!!changedRows) {
+      output.success = true;
+      output.message = "修改成功";
+    } else {
+      output.message = "修改失敗";
+    }
+  
+    res.json(output);
+  });
 
 
 
