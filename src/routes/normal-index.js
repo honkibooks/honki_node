@@ -93,31 +93,31 @@ router.delete('/delete/:c_sid', async (req, res) => {
 
 
 
-router.post("/picture-upload", upload2.single("avatar"), async (req, res) => {
-    const output = {
-      success: false,
-      message: "",
-    };
-    console.log("req", req.body.sid);
+// router.post("/picture-upload", upload2.single("avatar"), async (req, res) => {
+//     const output = {
+//       success: false,
+//       message: "",
+//     };
+//     console.log("req", req.body.sid);
   
-    sid = req.body.sid;
+//     sid = req.body.sid;
   
-    const sql = "UPDATE `members` SET `profile_picture`=? WHERE sid=?";
+//     const sql = "UPDATE `members` SET `profile_picture`=? WHERE sid=?";
   
-    const [{ affectedRows, changedRows }] = await db.query(sql, [
-      req.file.filename,
-      sid,
-    ]);
+//     const [{ affectedRows, changedRows }] = await db.query(sql, [
+//       req.file.filename,
+//       sid,
+//     ]);
   
-    if (!!changedRows) {
-      output.success = true;
-      output.message = "修改成功";
-    } else {
-      output.message = "修改失敗";
-    }
+//     if (!!changedRows) {
+//       output.success = true;
+//       output.message = "修改成功";
+//     } else {
+//       output.message = "修改失敗";
+//     }
   
-    res.json(output);
-  });
+//     res.json(output);
+//   });
 
 
 
