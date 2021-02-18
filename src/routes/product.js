@@ -124,9 +124,25 @@ router.get('/', async (req, res)=>{
 
 // 商品內頁資料
 router.get('/book/:sid?',async(req,res)=>{
+    const output ={
+        detail:[],
+        related:[],
+        history:[],
+    };
+    
     const sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid=? ";
-    const [output] =await db.query(sql,[req.params.sid]);
-    res.json(output[0]);
+    const [detail_rows] = await db.query(sql,[req.params.sid]);
+    output.detail = detail_rows
+
+    const related_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid = 15 ";
+    [related_rows] = await db.query(related_sql);
+    output.related = related_rows
+
+    const history_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid = 15 ";
+    [history_rows] = await db.query(history_sql);
+    output.history = history_rows
+
+    res.json(output);
 })
 
 
