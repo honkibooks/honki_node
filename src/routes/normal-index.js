@@ -16,14 +16,16 @@ const app = express();
 //     res.send('normal-index測試');
 // });
 
-router.get("/", async (req, res) => {
-    const [rows, fields] = await db.query(
-      "SELECT * FROM `secondhand_normalchange`"
-    );
-    res.json(rows);
-  });
+// router.get("/", async (req, res) => {
+//     const [rows, fields] = await db.query(
+//       "SELECT * FROM `secondhand_normalchange`"
+//     );
+//     res.json(rows);
+//   });
 
-const getListData = async (req)=>{
+
+//抓二手書一般交換資料&筆樹頁數計算
+  router.get("/", async (req, res)=>{
     const perPage = 10;
     const [t_rows] = await db.query("SELECT COUNT(1) num FROM `secondhand_normalchange`");
     const totalRows = t_rows[0].num;
@@ -35,32 +37,22 @@ const getListData = async (req)=>{
     if(totalRows > 0) {
         if(page < 1) page=1;
         if(page>totalPages) page=totalPages;
-        [rows] = await db.query("SELECT * FROM `secondhand_normalchange` ORDER BY `sid` DESC LIMIT ?, ?",
+        [rows] = await db.query("SELECT * FROM `secondhand_normalchange` ORDER BY `c_sid` DESC LIMIT ?, ?",
             [(page-1)* perPage, perPage]);
-        rows.forEach(item=>{
-            // item.birthday = moment(item.birthday).format('YYYY-MM-DD');
-        });
+    
     }
-    return {
+    res.json({
         perPage,
         totalRows,
         totalPages,
         page,
         rows,
-    }
-};
+    })
+});
 
-//list分頁限筆數(R)
-router.get('/api', async(req,res)=>{
-    res.json(await getListData(req));
- });
 
-// 其他人在換什麼區域
 
-// app.get('/try-jill',async(req, res)=>{
-//     const [rows]= await db.query("SELECT * FROM `secondhand_normalchange` ORDER BY `sid` DESC LIMIT 6")
-//     res.json(rows);
-//  });
+
 
 // 抓一般二手書 json格式
 // app.get('/',async(req,res)=>{
