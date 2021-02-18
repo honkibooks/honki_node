@@ -24,7 +24,7 @@ const app = express();
 //   });
 
 
-//抓二手書一般交換資料&筆樹頁數計算
+//抓二手書一般交換資料&筆數頁數計算
   router.get("/", async (req, res)=>{
     const perPage = 10;
     const [t_rows] = await db.query("SELECT COUNT(1) num FROM `secondhand_normalchange`");
