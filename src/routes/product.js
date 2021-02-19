@@ -23,17 +23,27 @@ const getProductList = async(req)=>{
     const category = req.params.category;
     // 搜尋
     const search = req.query.search;
+    const title_search = req.query.title_search;
+    const author_search = req.query.author_search;
+    const publication_search = req.query.publication_search;
     // 價格區間
     const minPrice = req.query.minPrice;
     const maxPrice = req.query.maxPrice;
 
-    // const category_sql = `AND c.category_sid=`+category;
     const category_sql = `AND c.eng_name='${category}'`;
+
     const search_sql = `AND p.title LIKE '%${search}%' OR p.title_eng LIKE '%${search}%' OR p.publication LIKE '%${search}%' OR p.author LIKE '%${search}%' `;
+    const title_search_sql = `AND p.title LIKE '%${title_search}%' OR p.title_eng LIKE '%${title_search}%' `;
+    const author_search_sql = `AND p.author LIKE '%${author_search}%' `;
+    const publication_search_sql = `AND p.publication LIKE '%${publication_search}%' `;
+
     const price_sql=`AND p.final_price BETWEEN ${minPrice ? minPrice : 0} AND ${maxPrice ? maxPrice : 10000} `;
 
     category ? sql += category_sql: sql; 
     search ? sql += search_sql:sql;
+    title_search ? sql += title_search_sql:sql;
+    author_search ? sql += author_search_sql:sql;
+    publication_search ? sql += publication_search_sql:sql;
     (minPrice || maxPrice) ? sql += price_sql: sql;
     
 
@@ -114,9 +124,25 @@ router.get('/', async (req, res)=>{
 
 // 商品內頁資料
 router.get('/book/:sid?',async(req,res)=>{
+    const output ={
+        detail:[],
+        related:[],
+        history:[],
+    };
+    
     const sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid=? ";
-    const [output] =await db.query(sql,[req.params.sid]);
-    res.json(output[0]);
+    const [detail_rows] = await db.query(sql,[req.params.sid]);
+    output.detail = detail_rows
+
+    const related_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.category_sid = ? ORDER BY RAND() LIMIT 6 ";
+    [related_rows] = await db.query(related_sql, [detail_rows[0].category_sid]);
+    output.related = related_rows
+
+    const history_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.category_sid = ? ORDER BY RAND() LIMIT 6 ";
+    [history_rows] = await db.query(history_sql,[detail_rows[0].category_sid]);
+    output.history = history_rows
+
+    res.json(output);
 })
 
 

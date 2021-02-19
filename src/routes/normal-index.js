@@ -16,10 +16,16 @@ router.get('/', async (req, res) => {
 
 //抓二手書一般交換資料&筆數頁數計算(R)
   router.get("/", async (req, res)=>{
-    const perPage = 10;
+    const perPage = 15;
     const [t_rows] = await db.query("SELECT COUNT(1) num FROM `secondhand_normalchange`");
     const totalRows = t_rows[0].num;
     const totalPages = Math.ceil(totalRows/perPage);
+
+    // 測試撈會員暱稱
+    let m_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` ORDER BY `c_sid` DESC ");
+
+    // 我的交換單(先用15號會員)
+    let mybook_rows = await db.query("SELECT * FROM `secondhand_normalchange` WHERE member_sid_o=15 ORDER BY `c_sid` DESC ");
 
     let page = parseInt(req.query.page) || 1;
 
@@ -27,16 +33,21 @@ router.get('/', async (req, res) => {
     if(totalRows > 0) {
         if(page < 1) page=1;
         if(page>totalPages) page=totalPages;
-        [rows] = await db.query("SELECT * FROM `secondhand_normalchange` ORDER BY `c_sid` DESC LIMIT ?, ?",
+        [rows] = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` ORDER BY `c_sid` DESC LIMIT ?, ?",
             [(page-1)* perPage, perPage]);
     
     }
+
+
+
     res.json({
         perPage,
         totalRows,
         totalPages,
         page,
         rows,
+        m_rows,
+        mybook_rows,
     })
 });
 
@@ -90,31 +101,31 @@ router.delete('/delete/:c_sid', async (req, res) => {
 
 
 
-router.post("/picture-upload", upload2.single("avatar"), async (req, res) => {
-    const output = {
-      success: false,
-      message: "",
-    };
-    console.log("req", req.body.sid);
+// router.post("/picture-upload", upload2.single("avatar"), async (req, res) => {
+//     const output = {
+//       success: false,
+//       message: "",
+//     };
+//     console.log("req", req.body.sid);
   
-    sid = req.body.sid;
+//     sid = req.body.sid;
   
-    const sql = "UPDATE `members` SET `profile_picture`=? WHERE sid=?";
+//     const sql = "UPDATE `members` SET `profile_picture`=? WHERE sid=?";
   
-    const [{ affectedRows, changedRows }] = await db.query(sql, [
-      req.file.filename,
-      sid,
-    ]);
+//     const [{ affectedRows, changedRows }] = await db.query(sql, [
+//       req.file.filename,
+//       sid,
+//     ]);
   
-    if (!!changedRows) {
-      output.success = true;
-      output.message = "修改成功";
-    } else {
-      output.message = "修改失敗";
-    }
+//     if (!!changedRows) {
+//       output.success = true;
+//       output.message = "修改成功";
+//     } else {
+//       output.message = "修改失敗";
+//     }
   
-    res.json(output);
-  });
+//     res.json(output);
+//   });
 
 
 

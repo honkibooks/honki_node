@@ -6,9 +6,9 @@ const db = require(__dirname + "/modules/db_connect");
 const app = express();
 const cors = require("cors");
 
-const multer = require('multer');
+const multer = require("multer");
 // const upload = multer({dest: 'tmp_uploads/'});
-const upload = require(__dirname + '/modules/upload-imgs');
+const upload = require(__dirname + "/modules/upload-imgs");
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -30,17 +30,15 @@ app.use("/cart", require(__dirname + "/routes/cart"));
 //jill區
 app.use("/normal-index", require(__dirname + "/routes/normal-index"));
 
-app.post('/jill-try-upload', upload.single('BC_pic1'),
-(req, res)=>{
-    res.json({
-        file: req.file,
-        body: req.body,
-    })
+app.post("/jill-try-upload", upload.single("BC_pic1"), (req, res) => {
+  res.json({
+    file: req.file,
+    body: req.body,
+  });
 });
 
-app.post('/jill-try-upload2', upload.array('BC_pic1'),
-(req, res)=>{
-      res.json(req.files)
+app.post("/jill-try-upload2", upload.array("BC_pic1"), (req, res) => {
+  res.json(req.files);
 });
 
 //wei區
@@ -48,7 +46,12 @@ app.use("/product", require(__dirname + "/routes/product"));
 //yen區
 app.use("/activity", require(__dirname + "/routes/actindex"));
 //yu區
-// app.use('/member',require(__dirname + '/routes/member'));
+app.use("/member", require(__dirname + "/routes/member"));
+
+
+
+
+
 
 app.get("/try-db", async (req, res) => {
   const [rows, fields] = await db.query(
