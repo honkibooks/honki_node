@@ -61,10 +61,10 @@ const getProductList = async(req)=>{
             break;
         // discount 折數排序
         case 'discountDESC':
-            sorts_sql = ` ORDER BY p.discount DESC `;
+            sorts_sql = ` ORDER BY p.discount ASC `;
             break;
         case 'discountASC':
-            sorts_sql = ` ORDER BY p.discount ASC `;
+            sorts_sql = ` ORDER BY p.discount DESC `;
             break;
         // pub_year 出版年份排序
         case 'pubyearDESC':
@@ -138,8 +138,8 @@ router.get('/book/:sid?',async(req,res)=>{
     [related_rows] = await db.query(related_sql, [detail_rows[0].category_sid]);
     output.related = related_rows
 
-    const history_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.category_sid = ? ORDER BY RAND() LIMIT 6 ";
-    [history_rows] = await db.query(history_sql,[detail_rows[0].category_sid]);
+    const history_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE 1 ORDER BY RAND() LIMIT 6 ";
+    [history_rows] = await db.query(history_sql);
     output.history = history_rows
 
     res.json(output);
