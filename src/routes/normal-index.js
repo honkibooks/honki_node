@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
     const totalRows = t_rows[0].num;
     const totalPages = Math.ceil(totalRows/perPage);
 
-    // 測試撈會員暱稱
+    // 測試撈會員暱稱(在學校電腦撈要DESC在家要照原排序???BUG待解)
     let m_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` ORDER BY `c_sid` DESC ");
 
     // 我的交換單(先用15號會員)
@@ -53,17 +53,17 @@ router.get('/', async (req, res) => {
 
 
 // add(C)
-router.post('/add', async (req, res) => {
-    const data = { ...req.body };
-    const sql = "INSERT INTO `secondhand_normalchange` set ?";
-    const [{ Rows, insertRows }] = await db.query(sql, [data]);
+// router.post('/add', async (req, res) => {
+//     const data = { ...req.body };
+//     const sql = "INSERT INTO `secondhand_normalchange` set ?";
+//     const [{ Rows, insertRows }] = await db.query(sql, [data]);
 
-    res.json({
-        success: !Rows,
-        Rows,
-        insertRows
-    });
-})
+//     res.json({
+//         success: !Rows,
+//         Rows,
+//         insertRows
+//     });
+// })
 
 
 // 在POSTMAN用下面JSON資料測試ADD可以進資料庫
@@ -75,6 +75,32 @@ router.post('/add', async (req, res) => {
 //     "member_sid_o":"15",
 
 // }
+
+// add(C)
+router.post('/add', async (req, res) => {
+    const ISBN = req.body.ISBN;
+    const book_name = req.body.book_name;
+    const book_condition = req.body.book_condition;
+    const written_or_not = req.body.written_or_not;
+    const BC_pic1 = req.body.BC_pic1;
+    const member_sid_o = req.body.member_sid_o;
+    const sql = `INSERT INTO \`secondhand_normalchange\`( \`ISBN\`, \`book_name\`, \`book_condition\`, \`written_or_not\`, \`BC_pic1\`, \`member_sid_o\`) VALUES (?,?,?,?,?,15)`;
+    const [{ Rows, insertRows }] = await db.query(sql, [
+        ISBN,
+        book_name,
+        book_condition,
+        written_or_not,
+        member_sid_o,
+        BC_pic1,
+
+    ]);
+
+    res.json({
+        success: !Rows,
+        Rows,
+        insertRows
+    });
+})
 
 
 //edit(U)
