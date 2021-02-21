@@ -40,18 +40,18 @@ router.post("/login", async (req, res) => {
     // req.session.member = rows[0];
     res.json({
       success: true,
+      body: rows[0],
     });
   } else {
     res.json({
       success: false,
-      body: req.body,
     });
   }
 });
 
-//登出-刪除session資料再轉向到login頁面
+// 登出-刪除session資料再轉向到login頁面
 // router.get("/logout", (req, res) => {
-//   delete req.session.member;
+//   localStorage.removeItem("userLogin");
 //   res.redirect("/login");
 // });
 
@@ -98,16 +98,73 @@ router.post("/register", async (req, res) => {
 });
 ////////////////////////////////////////////////menu///////////////////////////////////////////
 
-
-
-
 ////////////////////////////////////////////////edit//////////////////////////////////////////
-// //修改會員個人資料(取原來資料)
-// const editInfoSelect ="SELECT  `name`, `nickname`, `email`, `mobile`, `address`, `birthday`, `password`, `password` FROM `member`";
-// //修改會員個人資料(修改後傳資料回資料庫更新)
-// const editInfoUpdate ="SELECT  `name`, `nickname`, `email`, `mobile`, `address`, `birthday`, `password`, `password` FROM `member`";
+// //修改會員個人資料(取資料庫資料)
+router.get("/edit/:sid", async (req, res) => {
+  const [rows] = await db.query("SELECT * FROM `member` WHERE `sid` = ?", [
+    req.params.sid,
+  ]);
+  // res.json({
+  //   success: req.params.sid,
+  // });
 
+  if (rows.length === 1) {
+    // req.session.member = rows[0];
+    res.json({
+      success: true,
+      body: rows[0],
+    });
+  } else {
+    res.json({
+      success: false,
+    });
+  }
+});
+
+// //修改會員個人資料(修改後傳資料回資料庫更新)(Update)
+router.post("/edit/:sid", async (req, res) => {
+  const output = {
+    body: req.body,
+    success: false,
+    message: "",
+  };
+
+  const name = req.body.name;
+  const nickname = req.body.nickname;
+  // const email = req.body.email;
+  const mobile = req.body.mobile;
+  const address = req.body.address;
+  const birthday = req.body.birthday;
+  const password = req.body.password;
+
+  const sql =
+    "UPDATE `member` SET `name` = ?, `nickname` = ?, `mobile` = ?, `address` = ?, `birthday` = ? WHERE `member`.`sid` = ?";
+
+  //顯示資料在頁面上
+  const [{ affectedRows }] = await db.query(sql, [
+    name,
+    nickname,
+    mobile,
+    address,
+    birthday,
+    req.params.sid,
+  ]);
+
+  console.log;
+  if (!!affectedRows) {
+    output.success = true;
+    output.message = "新增成功";
+  } else {
+    output.message = "新增失敗";
+  }
+
+  res.json(output);
+});
+
+//變更密碼
 // const editPassword = "UPDATE"
+
+//刪除帳號
 
 ///////////////////////////////////////////////bookshelf///////////////////////////////////////
 

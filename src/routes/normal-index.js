@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const db = require(__dirname+'/../modules/db_connect');
+<<<<<<< HEAD
+=======
+const app = express();
+const upload = require(__dirname + "/../modules/upload-imgs")
+>>>>>>> upstream/master
 
 
 
@@ -126,32 +131,32 @@ router.delete('/delete/:c_sid', async (req, res) => {
 
 
 
-
-// router.post("/picture-upload", upload2.single("avatar"), async (req, res) => {
-//     const output = {
-//       success: false,
-//       message: "",
-//     };
-//     console.log("req", req.body.sid);
+// 圖片上傳
+router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
+    const output = {
+      success: false,
+      message: "",
+    };
+    console.log("req", req.body.c_sid);
   
-//     sid = req.body.sid;
+    c_sid = req.body.c_sid;
   
-//     const sql = "UPDATE `members` SET `profile_picture`=? WHERE sid=?";
+    const sql = "UPDATE `secondhand_normalchange` SET `BC_pic1`=? WHERE c_sid=?";
   
-//     const [{ affectedRows, changedRows }] = await db.query(sql, [
-//       req.file.filename,
-//       sid,
-//     ]);
+    const [{ Rows, changedRows }] = await db.query(sql, [
+      req.files.filename,
+      c_sid,
+    ]);
   
-//     if (!!changedRows) {
-//       output.success = true;
-//       output.message = "修改成功";
-//     } else {
-//       output.message = "修改失敗";
-//     }
+    if (!changedRows) {
+      output.success = true;
+      output.message = "修改成功";
+    } else {
+      output.message = "修改失敗";
+    }
   
-//     res.json(output);
-//   });
+    res.json(output);
+  });
 
 
 
