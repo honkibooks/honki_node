@@ -129,20 +129,63 @@ router.get('/book/:sid?',async(req,res)=>{
         related:[],
         history:[],
     };
-    
+
     const sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid=? ";
     const [detail_rows] = await db.query(sql,[req.params.sid]);
     output.detail = detail_rows
 
-    const related_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.category_sid = ? ORDER BY RAND() LIMIT 6 ";
+    const related_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.category_sid = ? ORDER BY RAND() LIMIT 10 ";
     [related_rows] = await db.query(related_sql, [detail_rows[0].category_sid]);
     output.related = related_rows
 
-    const history_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE 1 ORDER BY RAND() LIMIT 6 ";
-    [history_rows] = await db.query(history_sql);
+    //  TODO： 近期瀏覽
+    // SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (15, 80)
+    // const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?)  ";
+    // [history_rows] = await db.query(history_sql, JSON.parse(data));
+    // output.history = history_rows
+
+    res.json(output);
+})
+
+router.post('/history',async(req,res)=>{
+    const output ={
+        history:[],
+    };
+    // const data =  [0, 0, 0, 0, 0];
+    // data.push(15)
+    output.re=[...req.body]
+    //  TODO： 近期瀏覽
+    // SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (15, 80)
+    const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?, ?, ?, ?, ?, ?)  ";
+    // [history_rows] = await db.query(history_sql, [15, 80]);
+    
+    [history_rows] = await db.query(history_sql, [...req.body]);
     output.history = history_rows
 
     res.json(output);
+})
+// 新增 or 修改 favorite book
+// req.body.sid = member_sid
+// req.body.favorite_books_sid = [20, 30, 50]
+router.post('/favorite',async(req, res)=>{
+    const sql = "INSERT INTO `book_favorites` (`member_sid`, `favorite_books_sid` ) VALUES (?, ?) ON DUPLICATE KEY UPDATE `favorite_books_sid` = VALUE(`favorite_books_sid`) "
+    const sid = req.body.sid
+    const favorite_books_sid = req.body.favorite_books_sid
+    const [{ affectedRows }] = await db.query(sql, [sid, favorite_books_sid]);
+    res.json({
+        success: !!affectedRows,
+        affectedRows
+    })  
+})
+// 顯示 favorite books 資料
+router.get('/favorite/:sid', async(req, res)=>{
+    const sql = "SELECT `favorite_books_sid` FROM `book_favorites` WHERE member_sid=? ";
+    const [row] = await db.query(sql, [req.params.sid]);
+    if(row == 0){
+        res.json('Nothing in your favorite list')
+    } else{
+        res.json(row)
+    }
 })
 
 
