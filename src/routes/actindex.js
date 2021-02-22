@@ -99,7 +99,7 @@ router.get('/', async(req, res)=>{
     // 分類：休閒活動
     const hang_out = "SELECT * FROM `event` WHERE `act_class_sid` = 4 ORDER BY `act_sid` DESC LIMIT ?, ?";
     // 分類：活動地區
-    const area = "SELECT * FROM `event` WHERE `act_sid` ORDER BY `act_city_sid` ASC";
+    const area = "SELECT * FROM `event` WHERE `act_sid` ORDER BY `act_city_sid` ASC LIMIT ?, ?";
     // 分類：節氣推薦
     const recommend = "SELECT * FROM `event` WHERE `act_class_sid` = 6 ORDER BY `act_sid` DESC LIMIT ?, ?";
     // 預設
