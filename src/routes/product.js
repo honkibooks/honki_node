@@ -151,15 +151,16 @@ router.post('/history',async(req,res)=>{
     const output ={
         history:[],
     };
-    // const data =  [0, 0, 0, 0, 0];
-    // data.push(15)
-    output.re=[...req.body]
+    // const data =  [];
+    const data=[...req.body, 0, 0, 0, 0, 0, 0]
+    data.slice(0, 5)
+    output.re= [data.slice(0,-6)]
     //  TODO： 近期瀏覽
     // SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (15, 80)
     const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?, ?, ?, ?, ?, ?)  ";
     // [history_rows] = await db.query(history_sql, [15, 80]);
     
-    [history_rows] = await db.query(history_sql, [...req.body]);
+    [history_rows] = await db.query(history_sql, data);
     output.history = history_rows
 
     res.json(output);
