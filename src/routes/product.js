@@ -154,16 +154,17 @@ router.post('/history',async(req,res)=>{
     const data=[...req.body, 0, 0, 0, 0, 0, 0]
     output.recent= [data.slice(0, 6)]
 
-    //  TODO： 近期瀏覽
+    //  近期瀏覽
     // SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (15, 80)
     // const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?, ?, ?, ?, ?, ?) ";
     const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?, ?, ?, ?, ?, ?) ORDER BY FIELD(p.sid, ?, ?, ?, ?, ?, ?) ";
     
-    [history_rows] = await db.query(history_sql, [...data.slice(0, 6), ...data.slice(0, 6)]);
+    [history_rows] = await db.query(history_sql, [...data.slice(1, 7), ...data.slice(1, 7)]);
     output.history = history_rows
 
     res.json(output);
 })
+
 // 新增 or 修改 favorite book
 // req.body.sid = member_sid
 // req.body.favorite_books_sid = [20, 30, 50]
