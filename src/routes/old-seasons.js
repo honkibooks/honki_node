@@ -4,9 +4,11 @@ const db = require(__dirname+'/../modules/db_connect');
 
 const getSolarTerms = async(req) => {
   const output = {
-    test: 'test',
-    test2: 'test2',
+    solar_term_list: [],
   }
+
+  const [solarTerms] = await db.query("SELECT * FROM solar_terms ")
+  output.solar_term_list = solarTerms;
 
   return output
 }
