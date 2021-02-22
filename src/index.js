@@ -26,6 +26,7 @@ app.use("/cart", require(__dirname + "/routes/cart"));
 //chia區
 
 //hans區
+app.use("/old-seasons", require(__dirname + "/routes/old-seasons"));
 
 //jill區
 app.use("/normal-index", require(__dirname + "/routes/normal-index"));
