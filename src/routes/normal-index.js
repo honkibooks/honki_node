@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const db = require(__dirname+'/../modules/db_connect');
+const app = express();
+const upload = require(__dirname + "/../modules/upload-imgs")
 
 
 
@@ -8,11 +10,13 @@ const db = require(__dirname+'/../modules/db_connect');
 //     res.send('normal-index測試');
 // });
 
-router.get('/', async (req, res) => {
-    // res.send('normal-index測試');
-    const [rows, fields]=await db.query("SELECT * FROM `secondhand_randomchange`")
-    res.json(rows);
-});
+// router.get("/", async (req, res) => {
+//     const [rows, fields] = await db.query(
+//       "SELECT * FROM `secondhand_normalchange`"
+//     );
+//     res.json(rows);
+//   });
+
 
 //抓二手書一般交換資料&筆數頁數計算(R)
   router.get("/", async (req, res)=>{
@@ -127,31 +131,31 @@ router.delete('/delete/:c_sid', async (req, res) => {
 
 
 // 圖片上傳
-// router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
-//     const output = {
-//       success: false,
-//       message: "",
-//     };
-//     console.log("req", req.body.c_sid);
+router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
+    const output = {
+      success: false,
+      message: "",
+    };
+    console.log("req", req.body.c_sid);
   
-//     c_sid = req.body.c_sid;
+    c_sid = req.body.c_sid;
   
-//     const sql = "UPDATE `secondhand_normalchange` SET `BC_pic1`=? WHERE c_sid=?";
+    const sql = "UPDATE `secondhand_normalchange` SET `BC_pic1`=? WHERE c_sid=?";
   
-//     const [{ Rows, changedRows }] = await db.query(sql, [
-//       req.files.filename,
-//       c_sid,
-//     ]);
+    const [{ Rows, changedRows }] = await db.query(sql, [
+      req.files.filename,
+      c_sid,
+    ]);
   
-//     if (!changedRows) {
-//       output.success = true;
-//       output.message = "修改成功";
-//     } else {
-//       output.message = "修改失敗";
-//     }
+    if (!changedRows) {
+      output.success = true;
+      output.message = "修改成功";
+    } else {
+      output.message = "修改失敗";
+    }
   
-//     res.json(output);
-//   });
+    res.json(output);
+  });
 
 
 
