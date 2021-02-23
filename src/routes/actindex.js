@@ -1,5 +1,4 @@
 const express = require('express');
-const { stringify } = require('uuid');
 const router = express.Router();
 const db = require(__dirname + '/../modules/db_connect');
 
