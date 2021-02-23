@@ -168,25 +168,46 @@ router.post('/history',async(req,res)=>{
 // 新增 or 修改 favorite book
 // req.body.sid = member_sid
 // req.body.favorite_books_sid = [20, 30, 50]
-router.post('/favorite',async(req, res)=>{
-    const sql = "INSERT INTO `book_favorites` (`member_sid`, `favorite_books_sid` ) VALUES (?, ?) ON DUPLICATE KEY UPDATE `favorite_books_sid` = VALUE(`favorite_books_sid`) "
-    const sid = req.body.sid
-    const favorite_books_sid = req.body.favorite_books_sid
+router.post('/favorite/addFavorite',async(req, res)=>{
+    const sql = "INSERT INTO `book_favorites` (`member_sid`, `favorite_books_sid` ) VALUES (?, ?) "
+    const sid = req.body.userId
+    const favorite_books_sid = req.body.bookId
     const [{ affectedRows }] = await db.query(sql, [sid, favorite_books_sid]);
     res.json({
         success: !!affectedRows,
         affectedRows
     })  
 })
+// const sql = "INSERT INTO `book_favorites` (`member_sid`, `favorite_books_sid` ) VALUES (?, ?) ON DUPLICATE KEY UPDATE `favorite_books_sid` = VALUE(`favorite_books_sid`) "
+
+
+// remove favorite
+router.post('/favorite/removeFavorite',async(req, res)=>{
+    const sql = "DELETE FROM `book_favorites` WHERE `member_sid` = ? AND `favorite_books_sid` = ? "
+    const sid = req.body.userId
+    const favorite_books_sid = req.body.bookId
+    const [{ affectedRows }] = await db.query(sql, [sid, favorite_books_sid]);
+    res.json({
+        success: !!affectedRows,
+        affectedRows
+    })  
+})
+
 // 顯示 favorite books 資料
-router.get('/favorite/:sid', async(req, res)=>{
-    const sql = "SELECT `favorite_books_sid` FROM `book_favorites` WHERE member_sid=? ";
-    const [row] = await db.query(sql, [req.params.sid]);
-    if(row == 0){
-        res.json('Nothing in your favorite list')
-    } else{
-        res.json(row)
-    }
+router.post('/favorite/favoriteList', async(req, res)=>{
+    const output ={
+        success: false,
+        rows:[],
+    };
+    const sql = "SELECT p.* FROM `book_favorites` f JOIN book_product p ON f.favorite_books_sid = p.sid WHERE f.member_sid=? ";
+    const sid = req.body.userId
+
+    const [row] = await db.query(sql, sid);
+    output.rows= row
+    if(row) output.success=true
+    
+    res.json(output)  
+
 })
 
 
