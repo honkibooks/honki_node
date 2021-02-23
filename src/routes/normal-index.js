@@ -107,9 +107,8 @@ router.post('/add', async (req, res) => {
         book_name,
         book_condition,
         written_or_not,
-        member_sid_o,
         BC_pic1,
-
+        // member_sid_o,
     ]);
 
     res.json({
@@ -155,7 +154,7 @@ router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
   
     const sql = "UPDATE `secondhand_normalchange` SET `BC_pic1`=? WHERE c_sid=?";
   
-    const [{ Rows, changedRows }] = await db.query(sql, [
+    const [{ changedRows }] = await db.query(sql, [
       req.files.filename,
       c_sid,
     ]);
