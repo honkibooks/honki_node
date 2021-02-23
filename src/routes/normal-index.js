@@ -29,10 +29,12 @@ const upload = require(__dirname + "/../modules/upload-imgs")
     let m_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` ORDER BY `c_sid` DESC ");
 
     // 我的交換單(先用15號會員)
+
     let mybook_rows = await db.query("SELECT * FROM `secondhand_normalchange` WHERE member_sid_o=15 ORDER BY `c_sid` DESC ");
 
     let page = parseInt(req.query.page) || 1;
 
+    // 其他人在換什麼(目前包括自己)
     let rows = [];
     if(totalRows > 0) {
         if(page < 1) page=1;
@@ -54,6 +56,17 @@ const upload = require(__dirname + "/../modules/upload-imgs")
         mybook_rows,
     })
 });
+
+
+//其他人二手書呈現單筆(R)
+router.get('/usedbookdetail/:c_sid', async (req, res) => {
+  const sql = "SELECT * FROM `secondhand_normalchange` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` WHERE c_sid=?";
+  const [results] = await db.query(sql, [req.params.c_sid]);
+  // if (!results.length) return res.redirect('/activity/api');
+
+  res.json(results[0]);
+})
+
 
 
 // add(C)
