@@ -164,36 +164,33 @@ router.post("/edit/:sid", async (req, res) => {
 //變更密碼
 
 //將新密碼回傳資料庫(未完成)======================================================
-// router.post("/edit/:sid", async (req, res) => {
-//   const output = {
-//     body: req.body,
-//     success: false,
-//     message: "",
-//   };
+router.post("/editnewpassword", async (req, res) => {
+  const output = {
+    body: req.body,
+    success: false,
+    message: "",
+  };
 
-//   const editNewPassword = req.body.password;
+  const editNewPassword = req.body.password;
+  const sid = req.body.sid;
 
-//   const sql = "UPDATE `member` SET `passward` = ?, WHERE `member`.`sid` = ?";
+  const sql = "UPDATE `member` SET `password`=? WHERE `sid`=?";
 
-//   const [{ affectedRows }] = await db.query(sql, [
-//     // name,
-//     // nickname,
-//     // mobile,
-//     // address,
-//     // birthday,
-//     // req.params.sid,
-//   ]);
+  const [{ affectedRows }] = await db.query(sql, [
+   editNewPassword,
+   sid
+  ]);
 
-//   console.log;
-//   if (!!affectedRows) {
-//     output.success = true;
-//     output.message = "更新成功";
-//   } else {
-//     output.message = "更新失敗";
-//   }
+  console.log;
+  if (!!affectedRows) {
+    output.success = true;
+    output.message = "更新成功";
+  } else {
+    output.message = "更新失敗";
+  }
 
-//   res.json(output);
-// });
+  res.json(output);
+});
 
 //刪除帳號
 
