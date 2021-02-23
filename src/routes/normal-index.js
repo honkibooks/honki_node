@@ -59,7 +59,7 @@ const upload = require(__dirname + "/../modules/upload-imgs")
 
 
 //其他人二手書呈現單筆(R)
-router.get('/usedbookdetail/:c_sid', async (req, res) => {
+router.get('/used-book-detail/:c_sid', async (req, res) => {
   const sql = "SELECT * FROM `secondhand_normalchange` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` WHERE c_sid=?";
   const [results] = await db.query(sql, [req.params.c_sid]);
   // if (!results.length) return res.redirect('/activity/api');
