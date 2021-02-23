@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 23, 2021 at 09:04 AM
--- Server version: 10.4.16-MariaDB
--- PHP Version: 7.3.24
+-- 主機： localhost
+-- 產生時間： 2021 年 02 月 23 日 04:19
+-- 伺服器版本： 10.4.16-MariaDB
+-- PHP 版本： 7.3.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `honki`
+-- 資料庫： `honki`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `act_categories`
+-- 資料表結構 `act_categories`
 --
 
 CREATE TABLE `act_categories` (
@@ -33,7 +33,7 @@ CREATE TABLE `act_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `act_categories`
+-- 傾印資料表的資料 `act_categories`
 --
 
 INSERT INTO `act_categories` (`class_sid`, `class_name`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `act_categories` (`class_sid`, `class_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book_categories`
+-- 資料表結構 `book_categories`
 --
 
 CREATE TABLE `book_categories` (
@@ -57,7 +57,7 @@ CREATE TABLE `book_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `book_categories`
+-- 傾印資料表的資料 `book_categories`
 --
 
 INSERT INTO `book_categories` (`category_sid`, `name`, `eng_name`) VALUES
@@ -77,7 +77,7 @@ INSERT INTO `book_categories` (`category_sid`, `name`, `eng_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book_product`
+-- 資料表結構 `book_product`
 --
 
 CREATE TABLE `book_product` (
@@ -107,7 +107,7 @@ CREATE TABLE `book_product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `book_product`
+-- 傾印資料表的資料 `book_product`
 --
 
 INSERT INTO `book_product` (`sid`, `book_pics`, `title`, `title_eng`, `author`, `publication`, `pub_year`, `ISBN`, `price`, `discount`, `final_price`, `category_sid`, `language`, `author_intro`, `book_overview`, `list`, `stock_num`, `readtrial`, `created_at`, `item_sid`, `stars`, `reviews`, `tag`) VALUES
@@ -362,7 +362,7 @@ INSERT INTO `book_product` (`sid`, `book_pics`, `title`, `title_eng`, `author`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book_review`
+-- 資料表結構 `book_review`
 --
 
 CREATE TABLE `book_review` (
@@ -376,7 +376,7 @@ CREATE TABLE `book_review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `book_review`
+-- 傾印資料表的資料 `book_review`
 --
 
 INSERT INTO `book_review` (`sid`, `account`, `category`, `booktitle`, `ranking`, `review`, `creatdate`) VALUES
@@ -404,7 +404,7 @@ INSERT INTO `book_review` (`sid`, `account`, `category`, `booktitle`, `ranking`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book_review_comments`
+-- 資料表結構 `book_review_comments`
 --
 
 CREATE TABLE `book_review_comments` (
@@ -416,7 +416,7 @@ CREATE TABLE `book_review_comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `book_review_comments`
+-- 傾印資料表的資料 `book_review_comments`
 --
 
 INSERT INTO `book_review_comments` (`sid`, `commentsid`, `account`, `comment`, `writtentime`) VALUES
@@ -467,7 +467,7 @@ INSERT INTO `book_review_comments` (`sid`, `commentsid`, `account`, `comment`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book_review_comments_reply`
+-- 資料表結構 `book_review_comments_reply`
 --
 
 CREATE TABLE `book_review_comments_reply` (
@@ -481,7 +481,7 @@ CREATE TABLE `book_review_comments_reply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `book_review_comments_reply`
+-- 傾印資料表的資料 `book_review_comments_reply`
 --
 
 INSERT INTO `book_review_comments_reply` (`sid`, `account`, `reply`, `replyid`, `commentid`, `replyaccount`, `createtime`) VALUES
@@ -498,7 +498,7 @@ INSERT INTO `book_review_comments_reply` (`sid`, `account`, `reply`, `replyid`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `city`
+-- 資料表結構 `city`
 --
 
 CREATE TABLE `city` (
@@ -507,7 +507,7 @@ CREATE TABLE `city` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `city`
+-- 傾印資料表的資料 `city`
 --
 
 INSERT INTO `city` (`city_sid`, `city`) VALUES
@@ -538,17 +538,17 @@ INSERT INTO `city` (`city_sid`, `city`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `delivery`
+-- 資料表結構 `delivery`
 --
 
 CREATE TABLE `delivery` (
-  `sid` int(1) NOT NULL,
+  `sid` int(1) DEFAULT NULL,
   `delivery_options` varchar(17) DEFAULT NULL,
   `delivery_fee` int(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `delivery`
+-- 傾印資料表的資料 `delivery`
 --
 
 INSERT INTO `delivery` (`sid`, `delivery_options`, `delivery_fee`) VALUES
@@ -558,7 +558,7 @@ INSERT INTO `delivery` (`sid`, `delivery_options`, `delivery_fee`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `discount_codes`
+-- 資料表結構 `discount_codes`
 --
 
 CREATE TABLE `discount_codes` (
@@ -574,7 +574,7 @@ CREATE TABLE `discount_codes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `discount_codes`
+-- 傾印資料表的資料 `discount_codes`
 --
 
 INSERT INTO `discount_codes` (`sid`, `title`, `dis_percentage`, `discount_code`, `created_at`, `created_by`, `capacity_limit`, `capacity`, `create_memo`) VALUES
@@ -583,7 +583,7 @@ INSERT INTO `discount_codes` (`sid`, `title`, `dis_percentage`, `discount_code`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `event`
+-- 資料表結構 `event`
 --
 
 CREATE TABLE `event` (
@@ -605,7 +605,7 @@ CREATE TABLE `event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `event`
+-- 傾印資料表的資料 `event`
 --
 
 INSERT INTO `event` (`act_sid`, `act_name`, `act_time`, `act_price`, `event_city`, `act_location`, `act_about`, `act_transportation`, `act_notice`, `act_cancel_or_change`, `act_picture`, `act_limit_number`, `act_class_sid`, `act_city_sid`, `item_sid`) VALUES
@@ -771,16 +771,16 @@ INSERT INTO `event` (`act_sid`, `act_name`, `act_time`, `act_price`, `event_city
 -- --------------------------------------------------------
 
 --
--- Table structure for table `invoice`
+-- 資料表結構 `invoice`
 --
 
 CREATE TABLE `invoice` (
-  `sid` int(1) NOT NULL,
+  `sid` int(1) DEFAULT NULL,
   `invoice_options` varchar(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `invoice`
+-- 傾印資料表的資料 `invoice`
 --
 
 INSERT INTO `invoice` (`sid`, `invoice_options`) VALUES
@@ -791,16 +791,16 @@ INSERT INTO `invoice` (`sid`, `invoice_options`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `item`
+-- 資料表結構 `item`
 --
 
 CREATE TABLE `item` (
-  `sid` int(1) NOT NULL,
+  `sid` int(1) DEFAULT NULL,
   `item_name` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `item`
+-- 傾印資料表的資料 `item`
 --
 
 INSERT INTO `item` (`sid`, `item_name`) VALUES
@@ -810,7 +810,7 @@ INSERT INTO `item` (`sid`, `item_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `member`
+-- 資料表結構 `member`
 --
 
 CREATE TABLE `member` (
@@ -829,7 +829,7 @@ CREATE TABLE `member` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `member`
+-- 傾印資料表的資料 `member`
 --
 
 INSERT INTO `member` (`sid`, `name`, `nickname`, `email`, `mobile`, `address`, `birthday`, `level`, `gender`, `password`, `avatar`, `created_at`) VALUES
@@ -888,11 +888,11 @@ INSERT INTO `member` (`sid`, `name`, `nickname`, `email`, `mobile`, `address`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order`
+-- 資料表結構 `order`
 --
 
 CREATE TABLE `order` (
-  `sid` int(1) NOT NULL,
+  `sid` int(1) DEFAULT NULL,
   `member_sid` int(2) DEFAULT NULL,
   `order_number` varchar(10) DEFAULT NULL,
   `amonut` int(6) DEFAULT NULL,
@@ -907,7 +907,7 @@ CREATE TABLE `order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `order`
+-- 傾印資料表的資料 `order`
 --
 
 INSERT INTO `order` (`sid`, `member_sid`, `order_number`, `amonut`, `order_date`, `item_id`, `discount_id`, `delivery_sid`, `payment_sid`, `invoice_sid`, `recipient_sid`, `status_sid`) VALUES
@@ -918,76 +918,74 @@ INSERT INTO `order` (`sid`, `member_sid`, `order_number`, `amonut`, `order_date`
 (5, 20, 'A000000005', 83909, '2020/12/24 20:49', 1, 2, 1, 2, 1, 5, 1),
 (6, 8, 'A000000006', 140381, '2020/12/26 20:49', 2, 1, 1, 2, 1, 6, 2),
 (7, 32, 'A000000007', 34598, '2020/12/29 20:49', 2, 2, 2, 2, 2, 7, 1),
-(8, 1, 'B000000008', 1000, '2020/12/6 20:49', 2, 2, 1, 2, 2, 8, 1);
+(8, 49, 'A000000008', 70717, '2020/12/6 20:49', 1, 2, 1, 2, 2, 8, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_detail`
+-- 資料表結構 `order_detail`
 --
 
 CREATE TABLE `order_detail` (
-  `sid` int(11) NOT NULL,
+  `sid` int(2) DEFAULT NULL,
   `order_sid` int(1) DEFAULT NULL,
   `product_sid` int(2) DEFAULT NULL,
   `price` int(3) DEFAULT NULL,
   `quantity` int(2) DEFAULT NULL,
   `bookname` varchar(89) DEFAULT NULL,
   `ISBN` varchar(14) DEFAULT NULL,
-  `book_id` varchar(17) DEFAULT NULL,
-  `act_time` datetime DEFAULT NULL
+  `book_id` varchar(17) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `order_detail`
+-- 傾印資料表的資料 `order_detail`
 --
 
-INSERT INTO `order_detail` (`sid`, `order_sid`, `product_sid`, `price`, `quantity`, `bookname`, `ISBN`, `book_id`, `act_time`) VALUES
-(1, 1, 71, 578, 42, '渺小一生（上、下冊）', '9789862138342 ', '9789862138342.jpg', NULL),
-(2, 1, 36, 665, 49, '二地居: 地方創生未來式', '9789865250096 ', '9789865250096.png', NULL),
-(3, 1, 52, 345, 36, '特殊印刷．加工事典', '9789865114657 ', '5fe1e0d53a3c6.png', NULL),
-(4, 1, 3, 518, 50, '運動基因: 頂尖運動表現背後的科學', '9789869891363 ', '5fe1e25e7712a.png', NULL),
-(5, 2, 50, 548, 24, '99天失戀日記', '9789864779390 ', '5fe1e610bb37f.png', NULL),
-(6, 2, 13, 806, 7, '逆轉人生還不遲: 一本書學會這些學校不教的100條江湖智慧', '9789869951937 ', '5fe1e6b4a812e.png', NULL),
-(7, 2, 4, 880, 56, '我想告訴你十年份的『　　』。', '9789571088655 ', '5fe1e73e11e25.jpg', NULL),
-(8, 2, 21, 493, 92, '孤島教室', '9789887967026 ', '5fe1e7e53acca.png', NULL),
-(9, 3, 57, 406, 44, '日本語演化論: 誰說笑門福必來? 一本掀開154個詞語面紗的庶民生活史', '9789862489178 ', '5fe1e889675b4.png', NULL),
-(10, 3, 47, 985, 18, '常用西班牙語動詞變化小手冊', '9789864901449 ', '5fe1e8de68a9e.jpg', NULL),
-(11, 3, 30, 628, 78, '七感遊戲教養: 50個遊戲提案X105個啟發感官技巧, 提升幼兒專注力、協調力、社交力, 越玩越聰明!', '9789862489048 ', '5fe1ea5fbef96.png', NULL),
-(12, 3, 2, 763, 38, '怪獸媽媽', '9789865535971 ', '5fe1eb1c3eee6.png', NULL),
-(13, 4, 6, 877, 45, 'All We Are Saying: The Last Major Interview with John Lennon & Yoko Ono (40th Anniv. Ed.)', '9781529048414 ', '5fe1ece65a1ed.jpg', NULL),
-(14, 4, 22, 252, 69, 'Love in the Moment', '9789574375370 ', '5fe1ed704441b.jpg', NULL),
-(15, 4, 18, 825, 49, '自炊時代, 我的自煮料理: 一週煮三次, 將當令食材輕巧用完, 款待自己的七十二道美味食譜', '9789869877459 ', '5fe1ee239c1a6.jpg', NULL),
-(16, 4, 59, 909, 98, '歲月靜好: 蔣勳日常功課 (附蔣勳朗讀四季節氣)', '9789571356068 ', '5fe29f47689cb.jpg', NULL),
-(17, 4, 77, 970, 90, '異鄉人（卡繆版書衣）', '9789861735450 ', '5fe29fc524a15.png', NULL),
-(18, 5, 45, 721, 10, '台語片的魔力: 從故事、明星、導演到類型與行銷的電影關鍵詞', '9789869934725 ', '5fe2a045b9730.jpg', NULL),
-(19, 5, 15, 576, 48, '夜短夢長', '9789869749589 ', '5fe2a08f645df.jpg', NULL),
-(20, 5, 47, 972, 20, 'Good Eye台灣挑剔指南', '9789571380476 ', '5fe2b8f3e050e.jpg', NULL),
-(21, 5, 9, 944, 27, '嘉義旅行與速寫: 畫家帶路, 找一片留在心底的風景', '9789863364061 ', '5fe2e65b8a664.png', NULL),
-(22, 5, 36, 589, 7, '世界遺產：跟著深度旅行家馬繼康看世界', '9789865510459 ', '5fe2f1a8e4807.png', NULL),
-(23, 6, 70, 903, 63, '萬物的價值: 經濟體系的革命時代, 重新定義市場、價值、生產者與獲利者', '9789571384481 ', '5fe3073ac56bd.jpg', NULL),
-(24, 6, 72, 927, 46, '爸媽不用忍的正向教養: 改掉頂嘴、動作慢、依賴、行為退化、缺乏成就動機的免爆氣親子對話範本', '9789869858946 ', '5fe3f5b1b8602.jpg', NULL),
-(25, 6, 50, 950, 43, '與刺蝟孩子的對話練習', '9789863776376 ', '5fe40c1552e15.jpg', NULL),
-(26, 7, 54, 779, 16, '不然你搬去火星啊', '9789865651589 ', '5fe40c87e8e0c.jpg', NULL),
-(27, 7, 13, 238, 93, '死神的浮力', '9789866043901 ', '5fe40d0e7148e.png', NULL),
-(28, 7, 1, 492, 20, '草枕: 獨旅天地的終極美學, 夏目漱石最具詩境經典小說集 (浪漫典藏版)', '9789865511425 ', '5fe4115298d74.png', NULL),
-(29, 7, 30, 272, 41, '沒朋友, 只有山: 馬努斯島獄中札記', '9789869888530 ', '5fe411c883366.jpg', NULL),
-(30, 7, 4, 765, 65, '世界的盡頭我的女友', '9789869674867 ', '5fe4122e81eb5.png', NULL),
-(31, 8, 2, 1000, 1, '【花蓮壽豐】來花蓮當隻野猴子吧！樹頂探險一日遊', NULL, '/0.jpg', '2021-03-15 00:00:00');
+INSERT INTO `order_detail` (`sid`, `order_sid`, `product_sid`, `price`, `quantity`, `bookname`, `ISBN`, `book_id`) VALUES
+(1, 1, 71, 578, 42, '渺小一生（上、下冊）', '9789862138342 ', '9789862138342.jpg'),
+(2, 1, 36, 665, 49, '二地居: 地方創生未來式', '9789865250096 ', '9789865250096.png'),
+(3, 1, 52, 345, 36, '特殊印刷．加工事典', '9789865114657 ', '5fe1e0d53a3c6.png'),
+(4, 1, 3, 518, 50, '運動基因: 頂尖運動表現背後的科學', '9789869891363 ', '5fe1e25e7712a.png'),
+(5, 2, 50, 548, 24, '99天失戀日記', '9789864779390 ', '5fe1e610bb37f.png'),
+(6, 2, 13, 806, 7, '逆轉人生還不遲: 一本書學會這些學校不教的100條江湖智慧', '9789869951937 ', '5fe1e6b4a812e.png'),
+(7, 2, 4, 880, 56, '我想告訴你十年份的『　　』。', '9789571088655 ', '5fe1e73e11e25.jpg'),
+(8, 2, 21, 493, 92, '孤島教室', '9789887967026 ', '5fe1e7e53acca.png'),
+(9, 3, 57, 406, 44, '日本語演化論: 誰說笑門福必來? 一本掀開154個詞語面紗的庶民生活史', '9789862489178 ', '5fe1e889675b4.png'),
+(10, 3, 47, 985, 18, '常用西班牙語動詞變化小手冊', '9789864901449 ', '5fe1e8de68a9e.jpg'),
+(11, 3, 30, 628, 78, '七感遊戲教養: 50個遊戲提案X105個啟發感官技巧, 提升幼兒專注力、協調力、社交力, 越玩越聰明!', '9789862489048 ', '5fe1ea5fbef96.png'),
+(11, 3, 2, 763, 38, '怪獸媽媽', '9789865535971 ', '5fe1eb1c3eee6.png'),
+(11, 4, 6, 877, 45, 'All We Are Saying: The Last Major Interview with John Lennon & Yoko Ono (40th Anniv. Ed.)', '9781529048414 ', '5fe1ece65a1ed.jpg'),
+(11, 4, 22, 252, 69, 'Love in the Moment', '9789574375370 ', '5fe1ed704441b.jpg'),
+(11, 4, 18, 825, 49, '自炊時代, 我的自煮料理: 一週煮三次, 將當令食材輕巧用完, 款待自己的七十二道美味食譜', '9789869877459 ', '5fe1ee239c1a6.jpg'),
+(11, 4, 59, 909, 98, '歲月靜好: 蔣勳日常功課 (附蔣勳朗讀四季節氣)', '9789571356068 ', '5fe29f47689cb.jpg'),
+(11, 4, 77, 970, 90, '異鄉人（卡繆版書衣）', '9789861735450 ', '5fe29fc524a15.png'),
+(11, 5, 45, 721, 10, '台語片的魔力: 從故事、明星、導演到類型與行銷的電影關鍵詞', '9789869934725 ', '5fe2a045b9730.jpg'),
+(11, 5, 15, 576, 48, '夜短夢長', '9789869749589 ', '5fe2a08f645df.jpg'),
+(11, 5, 47, 972, 20, 'Good Eye台灣挑剔指南', '9789571380476 ', '5fe2b8f3e050e.jpg'),
+(11, 5, 9, 944, 27, '嘉義旅行與速寫: 畫家帶路, 找一片留在心底的風景', '9789863364061 ', '5fe2e65b8a664.png'),
+(11, 5, 36, 589, 7, '世界遺產：跟著深度旅行家馬繼康看世界', '9789865510459 ', '5fe2f1a8e4807.png'),
+(11, 6, 70, 903, 63, '萬物的價值: 經濟體系的革命時代, 重新定義市場、價值、生產者與獲利者', '9789571384481 ', '5fe3073ac56bd.jpg'),
+(11, 6, 72, 927, 46, '爸媽不用忍的正向教養: 改掉頂嘴、動作慢、依賴、行為退化、缺乏成就動機的免爆氣親子對話範本', '9789869858946 ', '5fe3f5b1b8602.jpg'),
+(11, 6, 50, 950, 43, '與刺蝟孩子的對話練習', '9789863776376 ', '5fe40c1552e15.jpg'),
+(11, 7, 54, 779, 16, '不然你搬去火星啊', '9789865651589 ', '5fe40c87e8e0c.jpg'),
+(11, 7, 13, 238, 93, '死神的浮力', '9789866043901 ', '5fe40d0e7148e.png'),
+(11, 8, 1, 492, 20, '草枕: 獨旅天地的終極美學, 夏目漱石最具詩境經典小說集 (浪漫典藏版)', '9789865511425 ', '5fe4115298d74.png'),
+(11, 8, 30, 272, 41, '沒朋友, 只有山: 馬努斯島獄中札記', '9789869888530 ', '5fe411c883366.jpg'),
+(11, 8, 4, 765, 65, '世界的盡頭我的女友', '9789869674867 ', '5fe4122e81eb5.png');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_status`
+-- 資料表結構 `order_status`
 --
 
 CREATE TABLE `order_status` (
-  `sid` int(1) NOT NULL,
+  `sid` int(1) DEFAULT NULL,
   `order_status` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `order_status`
+-- 傾印資料表的資料 `order_status`
 --
 
 INSERT INTO `order_status` (`sid`, `order_status`) VALUES
@@ -998,16 +996,16 @@ INSERT INTO `order_status` (`sid`, `order_status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payment`
+-- 資料表結構 `payment`
 --
 
 CREATE TABLE `payment` (
-  `sid` int(1) NOT NULL,
+  `sid` int(1) DEFAULT NULL,
   `payment_options` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `payment`
+-- 傾印資料表的資料 `payment`
 --
 
 INSERT INTO `payment` (`sid`, `payment_options`) VALUES
@@ -1017,42 +1015,36 @@ INSERT INTO `payment` (`sid`, `payment_options`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `recipient`
+-- 資料表結構 `recipient`
 --
 
 CREATE TABLE `recipient` (
-  `sid` int(1) NOT NULL,
+  `sid` int(1) DEFAULT NULL,
   `recipient_name` varchar(9) DEFAULT NULL,
-  `recipient_phone` varchar(255) DEFAULT NULL,
+  `recipient_phone` bigint(11) DEFAULT NULL,
   `recipient_email` varchar(25) DEFAULT NULL,
   `recipient_address` varchar(21) DEFAULT NULL,
-  `recipient_receivedTime` varchar(3) DEFAULT NULL,
-  `recipient_birthday` date DEFAULT NULL,
-  `recipient_IDnumber` varchar(255) DEFAULT NULL,
-  `recipient_gender` varchar(255) DEFAULT NULL,
-  `recipient_food` varchar(255) DEFAULT NULL,
-  `recipient_otherNotice` varchar(255) DEFAULT NULL,
-  `order_number` int(255) NOT NULL
+  `recipient_receivedTime` varchar(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `recipient`
+-- 傾印資料表的資料 `recipient`
 --
 
-INSERT INTO `recipient` (`sid`, `recipient_name`, `recipient_phone`, `recipient_email`, `recipient_address`, `recipient_receivedTime`, `recipient_birthday`, `recipient_IDnumber`, `recipient_gender`, `recipient_food`, `recipient_otherNotice`, `order_number`) VALUES
-(1, '王大俠', '09887744556', 'wan@gmail.com', '420台中市豐原區一心路209號', '夜間', NULL, NULL, NULL, '0', '0', 0),
-(2, 'Sherry', '09887744443', 'sherrysohot@hotmail.com', '403台中市西區模範街40巷12號', '白天', NULL, NULL, NULL, '0', '0', 0),
-(3, 'Rita', '09934434627', 'ritasosweet@gmail.com', '220新北市板橋區中山路一段158號', '不限時', NULL, NULL, NULL, '0', '0', 0),
-(4, 'Hank', '09823434759', 'hanksostrong@hotmail.com', '320桃園市中壢區春德路105號', '夜間', NULL, NULL, NULL, '0', '0', 0),
-(5, 'Pinky', '09124443748', 'pinkysobeatiful@gmail.com', '204基隆市安樂區安樂路二段166巷32號', '不限時', NULL, NULL, NULL, '0', '0', 0),
-(6, 'Jennivine', '09231161747', 'jennivinesocute@gmail.com', '106台北市大安區建國南路一段177號', '夜間', NULL, NULL, NULL, '0', '0', 0),
-(7, '東區明金城', '09241267299', 'whoisyourdaddy@gmail.com', '100台北市中正區羅斯福路三段302號', '白天', NULL, NULL, NULL, '0', '0', 0),
-(8, '韓佳蓉', '0921-333-001', 'books001@gmail.com', '100台北市中正區南昌路一段1號', 'NUL', '1989-01-01', 'A12345678', '女\r\n', '葷食 \r\n', '高血壓\r\n', 8);
+INSERT INTO `recipient` (`sid`, `recipient_name`, `recipient_phone`, `recipient_email`, `recipient_address`, `recipient_receivedTime`) VALUES
+(1, '王大俠', 9887744556, 'wan@gmail.com', '420台中市豐原區一心路209號', '夜間'),
+(2, 'Sherry', 9887744443, 'sherrysohot@hotmail.com', '403台中市西區模範街40巷12號', '白天'),
+(3, 'Rita', 9934434627, 'ritasosweet@gmail.com', '220新北市板橋區中山路一段158號', '不限時'),
+(4, 'Hank', 9823434759, 'hanksostrong@hotmail.com', '320桃園市中壢區春德路105號', '夜間'),
+(5, 'Pinky', 9124443748, 'pinkysobeatiful@gmail.com', '204基隆市安樂區安樂路二段166巷32號', '不限時'),
+(6, 'Jennivine', 9231161747, 'jennivinesocute@gmail.com', '106台北市大安區建國南路一段177號', '夜間'),
+(7, '東區明金城', 9241267299, 'whoisyourdaddy@gmail.com', '100台北市中正區羅斯福路三段302號', '白天'),
+(8, '鹿港陳漢典', 9122452788, 'yesbro@yahoo.com.tw', '100台北市中正區南昌路一段1號', '夜間');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `secondhand_normalchange`
+-- 資料表結構 `secondhand_normalchange`
 --
 
 CREATE TABLE `secondhand_normalchange` (
@@ -1075,7 +1067,7 @@ CREATE TABLE `secondhand_normalchange` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `secondhand_normalchange`
+-- 傾印資料表的資料 `secondhand_normalchange`
 --
 
 INSERT INTO `secondhand_normalchange` (`c_sid`, `ISBN`, `book_name`, `book_condition`, `BC_pic1`, `BC_pic2`, `BC_pic3`, `written_or_not`, `status`, `Match_c_sid`, `member_sid_o`, `member_sid_n`, `Iwant_c_sid`, `Peoplewant_c_sid`, `created_at`, `modifed_at`) VALUES
@@ -1089,7 +1081,7 @@ INSERT INTO `secondhand_normalchange` (`c_sid`, `ISBN`, `book_name`, `book_condi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `secondhand_randomchange`
+-- 資料表結構 `secondhand_randomchange`
 --
 
 CREATE TABLE `secondhand_randomchange` (
@@ -1111,7 +1103,7 @@ CREATE TABLE `secondhand_randomchange` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `secondhand_randomchange`
+-- 傾印資料表的資料 `secondhand_randomchange`
 --
 
 INSERT INTO `secondhand_randomchange` (`r_sid`, `ISBN`, `book_name`, `book_condition`, `BC_pic1`, `BC_pic2`, `BC_pic3`, `written_or_not`, `message`, `status`, `Match_r_sid`, `member_sid_o`, `member_sid_n`, `created_at`, `modifed_at`) VALUES
@@ -1124,7 +1116,7 @@ INSERT INTO `secondhand_randomchange` (`r_sid`, `ISBN`, `book_name`, `book_condi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `solar_terms`
+-- 資料表結構 `solar_terms`
 --
 
 CREATE TABLE `solar_terms` (
@@ -1142,7 +1134,7 @@ CREATE TABLE `solar_terms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `solar_terms`
+-- 傾印資料表的資料 `solar_terms`
 --
 
 INSERT INTO `solar_terms` (`sid`, `visible`, `year`, `solar_term`, `st_img`, `st_desc`, `created_at`, `created_by`, `last_modified_at`, `last_modified_by`, `last_mod_memo`) VALUES
@@ -1174,7 +1166,7 @@ INSERT INTO `solar_terms` (`sid`, `visible`, `year`, `solar_term`, `st_img`, `st
 -- --------------------------------------------------------
 
 --
--- Table structure for table `solar_term_books`
+-- 資料表結構 `solar_term_books`
 --
 
 CREATE TABLE `solar_term_books` (
@@ -1195,278 +1187,187 @@ CREATE TABLE `solar_term_books` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `solar_term_books`
+-- 傾印資料表的資料 `solar_term_books`
 --
 
 INSERT INTO `solar_term_books` (`sid`, `visible`, `year`, `solar_term_id`, `book_id`, `this_year_happened`, `why_this_book`, `related_link`, `editor_memo`, `created_at`, `created_by`, `last_modified_at`, `last_modified_by`, `last_mod_memo`) VALUES
 (1, 'deleted', '2021-01-01', 1, 1, '測試節氣選書資料庫。', '測試節氣選書資料庫。', NULL, '測試節氣選書資料庫。', '2021-01-30 20:51:53', 'laohanj', '2021-01-30 20:51:53', '', '測試節氣選書資料庫。');
 
 --
--- Indexes for dumped tables
+-- 已傾印資料表的索引
 --
 
 --
--- Indexes for table `act_categories`
+-- 資料表索引 `act_categories`
 --
 ALTER TABLE `act_categories`
   ADD PRIMARY KEY (`class_sid`),
   ADD KEY `city_sid` (`class_name`) USING BTREE;
 
 --
--- Indexes for table `book_categories`
+-- 資料表索引 `book_categories`
 --
 ALTER TABLE `book_categories`
   ADD PRIMARY KEY (`category_sid`);
 
 --
--- Indexes for table `book_product`
+-- 資料表索引 `book_product`
 --
 ALTER TABLE `book_product`
   ADD PRIMARY KEY (`sid`);
 
 --
--- Indexes for table `book_review`
+-- 資料表索引 `book_review`
 --
 ALTER TABLE `book_review`
   ADD PRIMARY KEY (`sid`);
 
 --
--- Indexes for table `book_review_comments`
+-- 資料表索引 `book_review_comments`
 --
 ALTER TABLE `book_review_comments`
   ADD PRIMARY KEY (`sid`);
 
 --
--- Indexes for table `book_review_comments_reply`
+-- 資料表索引 `book_review_comments_reply`
 --
 ALTER TABLE `book_review_comments_reply`
   ADD PRIMARY KEY (`sid`);
 
 --
--- Indexes for table `city`
+-- 資料表索引 `city`
 --
 ALTER TABLE `city`
   ADD PRIMARY KEY (`city_sid`);
 
 --
--- Indexes for table `delivery`
---
-ALTER TABLE `delivery`
-  ADD PRIMARY KEY (`sid`);
-
---
--- Indexes for table `discount_codes`
+-- 資料表索引 `discount_codes`
 --
 ALTER TABLE `discount_codes`
   ADD PRIMARY KEY (`sid`);
 
 --
--- Indexes for table `event`
+-- 資料表索引 `event`
 --
 ALTER TABLE `event`
   ADD PRIMARY KEY (`act_sid`),
   ADD KEY `categories_sid` (`act_class_sid`) USING BTREE;
 
 --
--- Indexes for table `invoice`
---
-ALTER TABLE `invoice`
-  ADD PRIMARY KEY (`sid`);
-
---
--- Indexes for table `item`
---
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`sid`);
-
---
--- Indexes for table `member`
+-- 資料表索引 `member`
 --
 ALTER TABLE `member`
   ADD PRIMARY KEY (`sid`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `order`
---
-ALTER TABLE `order`
-  ADD PRIMARY KEY (`sid`);
-
---
--- Indexes for table `order_detail`
---
-ALTER TABLE `order_detail`
-  ADD PRIMARY KEY (`sid`),
-  ADD KEY `sid` (`sid`);
-
---
--- Indexes for table `order_status`
---
-ALTER TABLE `order_status`
-  ADD PRIMARY KEY (`sid`);
-
---
--- Indexes for table `payment`
---
-ALTER TABLE `payment`
-  ADD PRIMARY KEY (`sid`);
-
---
--- Indexes for table `recipient`
---
-ALTER TABLE `recipient`
-  ADD PRIMARY KEY (`sid`);
-
---
--- Indexes for table `secondhand_normalchange`
+-- 資料表索引 `secondhand_normalchange`
 --
 ALTER TABLE `secondhand_normalchange`
   ADD PRIMARY KEY (`c_sid`);
 
 --
--- Indexes for table `secondhand_randomchange`
+-- 資料表索引 `secondhand_randomchange`
 --
 ALTER TABLE `secondhand_randomchange`
   ADD PRIMARY KEY (`r_sid`);
 
 --
--- Indexes for table `solar_terms`
+-- 資料表索引 `solar_terms`
 --
 ALTER TABLE `solar_terms`
   ADD PRIMARY KEY (`sid`);
 
 --
--- Indexes for table `solar_term_books`
+-- 資料表索引 `solar_term_books`
 --
 ALTER TABLE `solar_term_books`
   ADD PRIMARY KEY (`sid`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
 
 --
--- AUTO_INCREMENT for table `act_categories`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `act_categories`
 --
 ALTER TABLE `act_categories`
   MODIFY `class_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `book_categories`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `book_categories`
 --
 ALTER TABLE `book_categories`
   MODIFY `category_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `book_product`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `book_product`
 --
 ALTER TABLE `book_product`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=294;
 
 --
--- AUTO_INCREMENT for table `book_review`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `book_review`
 --
 ALTER TABLE `book_review`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `book_review_comments`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `book_review_comments`
 --
 ALTER TABLE `book_review_comments`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
--- AUTO_INCREMENT for table `book_review_comments_reply`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `book_review_comments_reply`
 --
 ALTER TABLE `book_review_comments_reply`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `city`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `city`
 --
 ALTER TABLE `city`
   MODIFY `city_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `delivery`
---
-ALTER TABLE `delivery`
-  MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `discount_codes`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `discount_codes`
 --
 ALTER TABLE `discount_codes`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `event`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `event`
 --
 ALTER TABLE `event`
   MODIFY `act_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
--- AUTO_INCREMENT for table `invoice`
---
-ALTER TABLE `invoice`
-  MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `item`
---
-ALTER TABLE `item`
-  MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `member`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT for table `order_detail`
---
-ALTER TABLE `order_detail`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
---
--- AUTO_INCREMENT for table `order_status`
---
-ALTER TABLE `order_status`
-  MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `payment`
---
-ALTER TABLE `payment`
-  MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `recipient`
---
-ALTER TABLE `recipient`
-  MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `secondhand_normalchange`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `secondhand_normalchange`
 --
 ALTER TABLE `secondhand_normalchange`
   MODIFY `c_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `secondhand_randomchange`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `secondhand_randomchange`
 --
 ALTER TABLE `secondhand_randomchange`
   MODIFY `r_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `solar_terms`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `solar_terms`
 --
 ALTER TABLE `solar_terms`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `solar_term_books`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `solar_term_books`
 --
 ALTER TABLE `solar_term_books`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
