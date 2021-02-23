@@ -46,6 +46,7 @@ app.post("/jill-try-upload2", upload.array("BC_pic1"), (req, res) => {
 app.use("/product", require(__dirname + "/routes/product"));
 //yen區
 app.use("/activity", require(__dirname + "/routes/actindex"));
+app.use("/member/actorder", require(__dirname + "/routes/actorder"));
 //yu區
 app.use("/member", require(__dirname + "/routes/member"));
 
