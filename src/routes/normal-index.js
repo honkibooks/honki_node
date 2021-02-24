@@ -30,7 +30,13 @@ const upload = require(__dirname + "/../modules/upload-imgs")
 
     // 我的交換單(先用15號會員)
 
-    let mybook_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid`  WHERE member_sid_o=15 ORDER BY `c_sid` DESC");
+    let mybook_rows = []
+    const row1 = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid`  WHERE member_sid_o=15 ORDER BY `c_sid` DESC");
+    mybook_rows.push(row1[0])
+
+    const row2 =await db.query("SELECT p.book_pics pic FROM `secondhand_normalchange` s JOIN `book_product` ON s.`ISBN` = `book_product`.`ISBN` JOIN `member` ON s.`member_sid_o` = `member`.`sid` JOIN `iwant` ON s.`c_sid` = `iwant`.`c_sid` JOIN `secondhand_normalchange` s2 ON `iwant`.`Iwant` = s2.c_sid JOIN `book_product` p ON s2.ISBN = p.ISBN WHERE s.`member_sid_o` =15")
+    mybook_rows.push(row2[0])
+    
 
     let page = parseInt(req.query.page) || 1;
 
@@ -144,6 +150,11 @@ router.delete('/delete/:c_sid', async (req, res) => {
 
 // Add(含圖片上傳)路由有空再改
 router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
+
+    // 抓localstorage的userId，要寫入member_sid_o欄位
+    const sid = req.body.userId
+    
+
     const output = {
       success: false,
       message: "",
@@ -165,6 +176,8 @@ router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
       BC_pic1: JSON.stringify(filenames),
 
       written_or_not:req.body.written_or_not,
+      // 下面16要變數，localstorage的userid填不進去
+      member_sid_o:sid,
 
       created_at: new Date(),
       modifed_at: new Date(),
@@ -173,7 +186,7 @@ router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
     // c_sid = req.body.c_sid;
   
     const sql = "INSERT INTO `secondhand_normalchange` SET ?";
-  
+
     const [{ changedRows }] = await db.query(sql, [data]);
   
     if (!changedRows) {
