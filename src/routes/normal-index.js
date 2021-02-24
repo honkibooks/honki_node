@@ -30,7 +30,7 @@ const upload = require(__dirname + "/../modules/upload-imgs")
 
     // 我的交換單(先用15號會員)
 
-    let mybook_rows = await db.query("SELECT * FROM `secondhand_normalchange` WHERE member_sid_o=15 ORDER BY `c_sid` DESC ");
+    let mybook_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid`  WHERE member_sid_o=15 ORDER BY `c_sid` DESC");
 
     let page = parseInt(req.query.page) || 1;
 
@@ -150,14 +150,27 @@ router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
     };
     console.log("req", req.body.c_sid);
   
-    c_sid = req.body.c_sid;
+    const filenames = [];
+    if(req.files && req.files.length){
+      req.files.forEach(f=>{
+        filenames.push(f.filename)
+      })
+    }
+
+    const data = {
+      ISBN: req.body.ISBN,
+
+      BC_pic1: JSON.stringify(filenames),
+
+      created_at: new Date(),
+      modified_at: new Date(),
+    }
+
+    // c_sid = req.body.c_sid;
   
-    const sql = "UPDATE `secondhand_normalchange` SET `BC_pic1`=? WHERE c_sid=?";
+    const sql = "INSERT INTO `secondhand_normalchange` SET ?";
   
-    const [{ changedRows }] = await db.query(sql, [
-      req.files.filename,
-      c_sid,
-    ]);
+    const [{ changedRows }] = await db.query(sql, [data]);
   
     if (!changedRows) {
       output.success = true;
