@@ -24,7 +24,7 @@ router.post("/", function (req, res, next) {
   console.log(req.body.test);
 });
 
-//=========================================login=========================================
+//=============login=============
 // router.get('/login', async (req, res)=>{res.render('login')});
 
 //登入-輸入帳號密碼和後端資料庫核對
@@ -55,7 +55,8 @@ router.post("/login", async (req, res) => {
 //   res.redirect("/login");
 // });
 
-//=========================================register=========================================
+//=============register=============
+//註冊(資料回傳資料庫)(Create)
 router.post("/register", async (req, res) => {
   const output = {
     body: req.body,
@@ -96,10 +97,10 @@ router.post("/register", async (req, res) => {
 
   res.json(output);
 });
-//=========================================menu=========================================
+//=============menu=============
 
-//=========================================edit=========================================
-// 1.1修改會員個人資料(取資料庫資料)
+//=============edit=============
+//修改會員個人資料(取資料庫資料)(Read)
 router.get("/edit/:sid", async (req, res) => {
   const [rows] = await db.query("SELECT * FROM `member` WHERE `sid` = ?", [
     req.params.sid,
@@ -121,7 +122,7 @@ router.get("/edit/:sid", async (req, res) => {
   }
 });
 
-// 1.2修改會員個人資料(修改後傳資料回資料庫更新)(Update)
+//修改會員個人資料(修改後傳資料回資料庫更新)(Update)
 router.post("/edit/:sid", async (req, res) => {
   const output = {
     body: req.body,
@@ -161,9 +162,8 @@ router.post("/edit/:sid", async (req, res) => {
   res.json(output);
 });
 
-//變更密碼
-
-//將新密碼回傳資料庫(未完成)======================================================
+//變更密碼(Update)
+//將新密碼回傳資料庫
 router.post("/editnewpassword", async (req, res) => {
   const output = {
     body: req.body,
@@ -192,17 +192,36 @@ router.post("/editnewpassword", async (req, res) => {
   res.json(output);
 });
 
-//刪除帳號
+//刪除帳號(Delete)
 
-router.delete('/edit/:sid', async (req, res) => {
-  const sql = "DELETE FROM `member` WHERE `member`.`sid` = ?";
+router.post('/editdeleteaccount', async (req, res) => {
+  const output = {
+    body: req.body,
+    success: false,
+    message: "",
+  };
 
-  const [rows] = await db.query(sql, [req.params.sid]);
-  res.json(rows);
-})
+  const sid = req.body.sid;
+  const editDeleteAccount = req.body.password;
+  
+  const sql = "DELETE FROM `member` WHERE `sid`=? AND `password`=?";
 
-// const sql = "DELETE FROM `member` WHERE `member`.`sid` = ?";
+  const [{ affectedRows }] = await db.query(sql, [
+    sid,
+    editDeleteAccount
+  ]);
 
-//=========================================bookshelf=========================================
+   console.log;
+   if (!!affectedRows) {
+     output.success = true;
+     output.message = "刪除成功";
+   } else {
+     output.message = "刪除失敗";
+   }
+ 
+   res.json(output);
+ });
+
+//=============bookshelf=============
 
 module.exports = router;
