@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-24 20:37:52
+-- 產生時間： 2021-02-24 12:59:15
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -81,7 +81,6 @@ INSERT INTO `book_categories` (`category_sid`, `name`, `eng_name`) VALUES
 --
 
 CREATE TABLE `book_favorites` (
-  `sid` int(255) NOT NULL,
   `member_sid` int(255) NOT NULL,
   `favorite_books_sid` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -90,14 +89,13 @@ CREATE TABLE `book_favorites` (
 -- 傾印資料表的資料 `book_favorites`
 --
 
-INSERT INTO `book_favorites` (`sid`, `member_sid`, `favorite_books_sid`) VALUES
-(1, 1, '280'),
-(2, 1, '270'),
-(3, 2, '15'),
-(4, 2, '280'),
-(5, 2, '84'),
-(6, 2, '281'),
-(7, 2, '280');
+INSERT INTO `book_favorites` (`member_sid`, `favorite_books_sid`) VALUES
+(1, '280'),
+(1, '270'),
+(2, '15'),
+(2, '280'),
+(2, '84'),
+(2, '281');
 
 -- --------------------------------------------------------
 
@@ -1296,7 +1294,6 @@ ALTER TABLE `book_categories`
 -- 資料表索引 `book_favorites`
 --
 ALTER TABLE `book_favorites`
-  ADD PRIMARY KEY (`sid`),
   ADD KEY `member_sid` (`member_sid`);
 
 --
@@ -1449,12 +1446,6 @@ ALTER TABLE `act_categories`
 --
 ALTER TABLE `book_categories`
   MODIFY `category_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `book_favorites`
---
-ALTER TABLE `book_favorites`
-  MODIFY `sid` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `book_product`
