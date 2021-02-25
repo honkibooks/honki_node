@@ -219,6 +219,33 @@ router.post('/other-add', async (req, res) => {
 })
 
 
+// const sql = `INSERT INTO \`iwant\`( \`c_sid\`, \`member_sid\`, \`Iwant\`, \`member_sid_o\`) VALUES (?,?,?,15)`;
+// const [{ Rows, insertRows }] = await db.query(sql, [
+//   c_sid,
+//   member_sid,
+//   Iwant,
+//   member_sid_o,
+// ]);
+
+// UPDATE `secondhand_normalchange` SET `status` = '交換完成', `Match_c_sid` = '20', `member_sid_n` = '15' WHERE `secondhand_normalchange`.`c_sid` = 14;
+
+// 隨機交換 edit(U) 功能OK
+router.post('/random/:c_sid', async (req, res)=>{
+  // 隨機數字
+const p = Math.floor(Math.random() * 6) + 1
+//  `status`=1 是交換成功
+  const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1, `member_sid_o`=15 WHERE c_sid=110";
+  const [Row] = await db.query(sql, p, req.params.c_sid);
+  console.log(Row)
+  res.json({
+      // success: !changedRows,
+      Row,
+    
+  });
+});
+
+
+
 // 抓一般二手書 json格式
 // app.get('/',async(req,res)=>{
 //     const [rows, fields]=await db.query("SELECT * FROM `secondhand_normalchange`")
