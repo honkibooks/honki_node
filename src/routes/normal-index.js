@@ -200,6 +200,27 @@ router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
   });
 
 
+  // add(C) 其他人想換什麼-發送交換請求
+router.post('/other-add', async (req, res) => {
+    const c_sid = req.body.c_sid;
+    const member_sid = req.body.member_sid;
+    const Iwant = req.body.Iwant;
+    const member_sid_o = req.body.member_sid_o;
+    const sql = `INSERT INTO \`iwant\`( \`c_sid\`, \`member_sid\`, \`Iwant\`, \`member_sid_o\`) VALUES (?,?,?,15)`;
+    const [{ Rows, insertRows }] = await db.query(sql, [
+      c_sid,
+      member_sid,
+      Iwant,
+      member_sid_o,
+    ]);
+
+    res.json({
+        success: !Rows,
+        Rows,
+        insertRows
+    });
+})
+
 
 // 抓一般二手書 json格式
 // app.get('/',async(req,res)=>{
