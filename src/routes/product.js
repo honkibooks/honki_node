@@ -200,8 +200,7 @@ router.post('/favorite/favoriteList', async(req, res)=>{
         rows:[],
     };
     const sql = "SELECT p.* FROM `book_favorites` f JOIN book_product p ON f.favorite_books_sid = p.sid WHERE f.member_sid=? ORDER BY f.sid DESC ";
-    const sid = req.body.userId
-
+    const sid = req.body.userId || 1
     const [row] = await db.query(sql, sid);
     output.rows= row
     if(row) output.success=true
