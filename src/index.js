@@ -12,6 +12,7 @@ const upload = require(__dirname + "/modules/upload-imgs");
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(express.static( 'public'));
 
 // test 首頁抓二手書隨機資料 json格式
 app.get("/", async (req, res) => {
@@ -20,6 +21,9 @@ app.get("/", async (req, res) => {
   );
   res.json(rows);
 });
+
+
+
 
 //aw區
 app.use("/cart", require(__dirname + "/routes/cart"));
@@ -30,6 +34,7 @@ app.use("/old-seasons", require(__dirname + "/routes/old-seasons"));
 
 //jill區
 app.use("/normal-index", require(__dirname + "/routes/normal-index"));
+
 
 app.post("/jill-try-upload", upload.single("BC_pic1"), (req, res) => {
   res.json({

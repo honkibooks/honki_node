@@ -30,9 +30,12 @@ const upload = require(__dirname + "/../modules/upload-imgs")
 
     // 我的交換單(先用15號會員)
 
-    let mybook_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid`  WHERE member_sid_o=15 ORDER BY `c_sid` DESC");
+    let mybook_rows = []
+    const row1 = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid`  WHERE member_sid_o=15 ORDER BY `c_sid` DESC");
+    mybook_rows.push(row1[0])
 
-  
+    const row2 =await db.query("SELECT p.book_pics pic FROM `secondhand_normalchange` s JOIN `book_product` ON s.`ISBN` = `book_product`.`ISBN` JOIN `member` ON s.`member_sid_o` = `member`.`sid` JOIN `iwant` ON s.`c_sid` = `iwant`.`c_sid` JOIN `secondhand_normalchange` s2 ON `iwant`.`Iwant` = s2.c_sid JOIN `book_product` p ON s2.ISBN = p.ISBN WHERE s.`member_sid_o` =15")
+    mybook_rows.push(row2[0])
     
 
     let page = parseInt(req.query.page) || 1;
@@ -195,54 +198,6 @@ router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
   
     res.json(output);
   });
-
-
-  // add(C) 其他人想換什麼-發送交換請求
-router.post('/other-add', async (req, res) => {
-    const c_sid = req.body.c_sid;
-    const member_sid = req.body.member_sid;
-    const Iwant = req.body.Iwant;
-    const member_sid_o = req.body.member_sid_o;
-    const sql = `INSERT INTO \`iwant\`( \`c_sid\`, \`member_sid\`, \`Iwant\`, \`member_sid_o\`) VALUES (?,?,?,15)`;
-    const [{ Rows, insertRows }] = await db.query(sql, [
-      c_sid,
-      member_sid,
-      Iwant,
-      member_sid_o,
-    ]);
-
-    res.json({
-        success: !Rows,
-        Rows,
-        insertRows
-    });
-})
-
-
-// const sql = `INSERT INTO \`iwant\`( \`c_sid\`, \`member_sid\`, \`Iwant\`, \`member_sid_o\`) VALUES (?,?,?,15)`;
-// const [{ Rows, insertRows }] = await db.query(sql, [
-//   c_sid,
-//   member_sid,
-//   Iwant,
-//   member_sid_o,
-// ]);
-
-// UPDATE `secondhand_normalchange` SET `status` = '交換完成', `Match_c_sid` = '20', `member_sid_n` = '15' WHERE `secondhand_normalchange`.`c_sid` = 14;
-
-// 隨機交換 edit(U) 功能OK
-router.post('/random/:c_sid', async (req, res)=>{
-  // 隨機數字
-const p = Math.floor(Math.random() * 6) + 1
-//  `status`=1 是交換成功
-  const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1, `member_sid_o`=15 WHERE c_sid=110";
-  const [Row] = await db.query(sql, p, req.params.c_sid);
-  console.log(Row)
-  res.json({
-      // success: !changedRows,
-      Row,
-    
-  });
-});
 
 
 
