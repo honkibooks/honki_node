@@ -28,7 +28,7 @@ app.get("/", async (req, res) => {
 //aw區
 app.use("/cart", require(__dirname + "/routes/cart"));
 //chia區
-
+app.use('/reviews', require(__dirname + "/routes/review.js"));
 //hans區
 app.use("/old-seasons", require(__dirname + "/routes/old-seasons"));
 
