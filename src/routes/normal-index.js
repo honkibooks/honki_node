@@ -25,10 +25,10 @@ const upload = require(__dirname + "/../modules/upload-imgs")
     const totalRows = t_rows[0].num;
     const totalPages = Math.ceil(totalRows/perPage);
 
-    // 測試撈會員暱稱(在學校電腦撈要DESC在家要照原排序???BUG待解)
+    // 測試撈會員暱稱(R 在學校電腦撈要DESC在家要照原排序???BUG待解)
     let m_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` ORDER BY `c_sid` DESC ");
 
-    // 我的交換單(先用15號會員)
+    // 我的交換單(R 先用15號會員)
 
     let mybook_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid`  WHERE member_sid_o=15 ORDER BY `c_sid` DESC");
 
@@ -37,7 +37,7 @@ const upload = require(__dirname + "/../modules/upload-imgs")
 
     let page = parseInt(req.query.page) || 1;
 
-    // 其他人在換什麼(目前包括自己)
+    // 其他人在換什麼(R 目前包括自己)
     let rows = [];
     if(totalRows > 0) {
         if(page < 1) page=1;
@@ -61,8 +61,18 @@ const upload = require(__dirname + "/../modules/upload-imgs")
 });
 
 
-//其他人二手書呈現單筆(R)
+//其他人二手書查看按鈕-呈現單筆(R)
 router.get('/used-book-detail/:c_sid', async (req, res) => {
+  const sql = "SELECT * FROM `secondhand_normalchange` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` WHERE c_sid=?";
+  const [results] = await db.query(sql, [req.params.c_sid]);
+  // if (!results.length) return res.redirect('/activity/api');
+
+  res.json(results[0]);
+})
+
+
+//我的二手書查看按鈕-呈現單筆(R) 後端ok
+router.get('/my-used-book-detail/:c_sid', async (req, res) => {
   const sql = "SELECT * FROM `secondhand_normalchange` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` WHERE c_sid=?";
   const [results] = await db.query(sql, [req.params.c_sid]);
   // if (!results.length) return res.redirect('/activity/api');
@@ -173,7 +183,6 @@ router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
       BC_pic1: JSON.stringify(filenames),
 
       written_or_not:req.body.written_or_not,
-      // 下面16要變數，localstorage的userid填不進去
       member_sid_o:sid,
 
       created_at: new Date(),
@@ -219,17 +228,13 @@ router.post('/other-add', async (req, res) => {
 })
 
 
-// const sql = `INSERT INTO \`iwant\`( \`c_sid\`, \`member_sid\`, \`Iwant\`, \`member_sid_o\`) VALUES (?,?,?,15)`;
-// const [{ Rows, insertRows }] = await db.query(sql, [
-//   c_sid,
-//   member_sid,
-//   Iwant,
-//   member_sid_o,
-// ]);
 
-// UPDATE `secondhand_normalchange` SET `status` = '交換完成', `Match_c_sid` = '20', `member_sid_n` = '15' WHERE `secondhand_normalchange`.`c_sid` = 14;
 
-// 隨機交換 edit(U) 功能OK
+
+
+
+
+// 隨機交換 edit(U) 寫入抽到的號碼(=修改單子) 功能OK
 router.post('/random/:c_sid', async (req, res)=>{
   // 隨機數字
 const p = Math.floor(Math.random() * 6) + 1

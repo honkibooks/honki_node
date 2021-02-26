@@ -36,16 +36,7 @@ app.use("/old-seasons", require(__dirname + "/routes/old-seasons"));
 app.use("/normal-index", require(__dirname + "/routes/normal-index"));
 
 
-app.post("/jill-try-upload", upload.single("BC_pic1"), (req, res) => {
-  res.json({
-    file: req.file,
-    body: req.body,
-  });
-});
 
-app.post("/jill-try-upload2", upload.array("BC_pic1"), (req, res) => {
-  res.json(req.files);
-});
 
 //wei區
 app.use("/product", require(__dirname + "/routes/product"));
