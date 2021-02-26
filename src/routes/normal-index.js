@@ -20,12 +20,13 @@ const upload = require(__dirname + "/../modules/upload-imgs")
 
 //抓二手書一般交換資料&筆數頁數計算(R)
   router.get("/", async (req, res)=>{
-    const perPage = 15;
+    // 因為換頁還沒做，所以先perpage100
+    const perPage = 100;
     const [t_rows] = await db.query("SELECT COUNT(1) num FROM `secondhand_normalchange`");
     const totalRows = t_rows[0].num;
     const totalPages = Math.ceil(totalRows/perPage);
 
-    // 測試撈會員暱稱(R 在學校電腦撈要DESC在家要照原排序???BUG待解)
+    // 測試撈會員暱稱(R 這下面不能註解，會壞掉)
     let m_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` ORDER BY `c_sid` DESC ");
 
     // 我的交換單(R 先用15號會員)
@@ -42,7 +43,7 @@ const upload = require(__dirname + "/../modules/upload-imgs")
     if(totalRows > 0) {
         if(page < 1) page=1;
         if(page>totalPages) page=totalPages;
-        [rows] = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` ORDER BY `c_sid` DESC LIMIT ?, ?",
+        [rows] = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` ORDER BY `c_sid` DESC LIMIT ?, ?",
             [(page-1)* perPage, perPage]);
     
     }
@@ -206,7 +207,7 @@ router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
   });
 
 
-  // add(C) 其他人想換什麼-發送交換請求
+  // add(C) 其他人想換什麼-發送交換請求 沒在用，但先不要註解，會crashed
 router.post('/other-add', async (req, res) => {
     const c_sid = req.body.c_sid;
     const member_sid = req.body.member_sid;
