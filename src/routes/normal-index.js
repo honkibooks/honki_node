@@ -236,17 +236,16 @@ router.post('/other-add', async (req, res) => {
 
 
 // 隨機交換 edit(U) 寫入抽到的號碼(=修改單子) 功能OK
-router.post('/random/:c_sid', async (req, res)=>{
-  // 隨機數字
-const p = Math.floor(Math.random() * 6) + 1
+router.post('/random/:c_sid?', async (req, res)=>{
+  // 隨機數字要1到多少就改多少
+const p = Math.floor(Math.random() * 100) + 1
 //  `status`=1 是交換成功
-  const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1, `member_sid_o`=15 WHERE c_sid=110";
-  const [Row] = await db.query(sql, p, req.params.c_sid);
+  const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1, `member_sid_o`=15 WHERE c_sid=?";
+  const [Row] = await db.query(sql, [p, req.params.c_sid]);
   console.log(Row)
   res.json({
       // success: !changedRows,
-      Row,
-    
+      Row
   });
 });
 
