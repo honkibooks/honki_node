@@ -241,24 +241,35 @@ router.post('/random/:c_sid?', async (req, res)=>{
   // 隨機數字要1到多少就改多少
 const p = Math.floor(Math.random() * 10) + 1
 
-// const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1, `member_sid_o`=15 WHERE c_sid=?";
 
-//  `status`=1 是交換成功，書本已下魚池，不會再出現在我的交換單裡面，會出現在下面魚池，但撈不到它
-  const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1 WHERE c_sid=?";
-  const [Row] = await db.query(sql, [p, req.params.c_sid]);
+const randomID = "SELECT `c_sid` FROM `secondhand_normalchange` WHERE `status`=1 ORDER BY RAND() LIMIT 1"
+
+
+// console.log(randomID)
+
+//  `status`=1 是交換成功，書本已下魚池，不會再出現在我的交換單裡面，會出現在下面魚池，但撈不到它(照理說其他`status`=1的單子Match_c_sid應該有值但因為我直接用資料庫新增資料，所以算了)
+  // const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1 WHERE c_sid=?";
+  // const [Row] = await db.query(sql, [p, req.params.c_sid]);
+  const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=(SELECT `c_sid` FROM `secondhand_normalchange` WHERE `status`=1 ORDER BY RAND() LIMIT 1), `status`=1 WHERE c_sid=?";
+
+  const [Row] = await db.query(sql,[req.params.c_sid]);
   console.log(Row)
   res.json({
       // success: !changedRows,
-      Row
+      Row,
+      
+ 
   });
 
   //  `status`=2 是已被抽走，書本離開魚池，不會再出現在魚池
-  const sql2 = "UPDATE `secondhand_normalchange` SET `status`=2 WHERE c_sid=?";
-  const [Row2] = await db.query(sql2, [p]);
+  // const sql2 = "UPDATE `secondhand_normalchange` SET `status`=2 WHERE c_sid=?";
+  // const [Row2] = await db.query(sql2, [p]);
+  const sql2 = "UPDATE `secondhand_normalchange` SET `status`=2 WHERE c_sid=(SELECT s2.`c_sid` FROM `secondhand_normalchange` s JOIN `secondhand_normalchange` s2 ON s.`Match_c_sid`=s2.`c_sid` WHERE s.c_sid=?)";
+  const [Row2] = await db.query(sql2,[req.params.c_sid]);
   console.log(Row)
   res.json({
-      // success: !changedRows,
-      Row2
+      Row2,
+      
   });
 });
 
