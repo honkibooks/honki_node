@@ -29,9 +29,9 @@ const upload = require(__dirname + "/../modules/upload-imgs")
     // 測試撈會員暱稱(R 這下面不能註解，會壞掉)
     let m_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` ORDER BY `c_sid` DESC ");
 
-    // 我的交換單(R 先用15號會員)
+    // 我的交換單(R 先用1號會員) 只有status=0，尚未丟入魚池還沒交換過的才會出現
 
-    let mybook_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid`  WHERE member_sid_o=15 ORDER BY `c_sid` DESC");
+    let mybook_rows = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid`  WHERE member_sid_o=1 AND status=0 ORDER BY `c_sid` DESC");
 
   
     
@@ -43,7 +43,7 @@ const upload = require(__dirname + "/../modules/upload-imgs")
     if(totalRows > 0) {
         if(page < 1) page=1;
         if(page>totalPages) page=totalPages;
-        [rows] = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` ORDER BY `c_sid` DESC LIMIT ?, ?",
+        [rows] = await db.query("SELECT * FROM `secondhand_normalchange` JOIN `book_product` ON `secondhand_normalchange`.`ISBN` = `book_product`.`ISBN` JOIN `member` ON `secondhand_normalchange`.`member_sid_o` = `member`.`sid` WHERE status=1 ORDER BY `c_sid` DESC LIMIT ?, ?",
             [(page-1)* perPage, perPage]);
     
     }
@@ -184,6 +184,7 @@ router.post("/picture-upload", upload.array("BC_pic1"), async (req, res) => {
       BC_pic1: JSON.stringify(filenames),
 
       written_or_not:req.body.written_or_not,
+      status:0,  
       member_sid_o:sid,
 
       created_at: new Date(),
@@ -238,15 +239,50 @@ router.post('/other-add', async (req, res) => {
 // 隨機交換 edit(U) 寫入抽到的號碼(=修改單子) 功能OK
 router.post('/random/:c_sid?', async (req, res)=>{
   // 隨機數字要1到多少就改多少
-const p = Math.floor(Math.random() * 100) + 1
-//  `status`=1 是交換成功
-  const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1, `member_sid_o`=15 WHERE c_sid=?";
+const p = Math.floor(Math.random() * 10) + 1
+
+// const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1, `member_sid_o`=15 WHERE c_sid=?";
+
+//  `status`=1 是交換成功，書本已下魚池，不會再出現在我的交換單裡面，會出現在下面魚池，但撈不到它
+  const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1 WHERE c_sid=?";
   const [Row] = await db.query(sql, [p, req.params.c_sid]);
   console.log(Row)
   res.json({
       // success: !changedRows,
       Row
   });
+
+  //  `status`=2 是已被抽走，書本離開魚池，不會再出現在魚池
+  const sql2 = "UPDATE `secondhand_normalchange` SET `status`=2 WHERE c_sid=?";
+  const [Row2] = await db.query(sql2, [p]);
+  console.log(Row)
+  res.json({
+      // success: !changedRows,
+      Row2
+  });
+});
+
+
+
+//隨機交換成功結果頁面-呈現單筆(R) 測試ok
+router.get('/random-success/:c_sid', async (req, res) => {
+  const sql = "SELECT s.`Match_c_sid`,s2.`ISBN`,s2.`book_name`,b.`book_pics`,m.`nickname` FROM `secondhand_normalchange` s JOIN  `secondhand_normalchange` s2 ON s.`Match_c_sid` = s2.`c_sid` JOIN `book_product` b ON s2.`ISBN` = b.`ISBN` JOIN `member` m ON s2.`member_sid_o` = m.`sid`  WHERE s.`c_sid` =?";
+  const [results] = await db.query(sql, [req.params.c_sid]);
+  // if (!results.length) return res.redirect('/activity/api');
+
+  res.json(results[0]);
+
+  
+})
+
+
+// 隨機交換 edit(U) 回二手書交換
+router.post('/random-finish/:c_sid?', async (req, res)=>{
+
+
+// const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=?, `status`=1, `member_sid_o`=15 WHERE c_sid=?";
+
+
 });
 
 
