@@ -138,12 +138,6 @@ router.get('/book/:sid?',async(req,res)=>{
     [related_rows] = await db.query(related_sql, [detail_rows[0].category_sid]);
     output.related = related_rows
 
-    //  TODO： 近期瀏覽
-    // SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (15, 80)
-    // const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?)  ";
-    // [history_rows] = await db.query(history_sql, JSON.parse(data));
-    // output.history = history_rows
-
     res.json(output);
 })
 
@@ -151,15 +145,15 @@ router.post('/history',async(req,res)=>{
     const output ={
         history:[],
     };
-    const data=[...req.body, 0, 0, 0, 0, 0, 0]
-    output.recent= [data.slice(0, 6)]
+    const data=[...req.body, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    output.recent= [data.slice(0, 10)]
 
     //  近期瀏覽
     // SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (15, 80)
     // const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?, ?, ?, ?, ?, ?) ";
-    const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?, ?, ?, ?, ?, ?) ORDER BY FIELD(p.sid, ?, ?, ?, ?, ?, ?) ";
+    const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ORDER BY FIELD(p.sid, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
     
-    [history_rows] = await db.query(history_sql, [...data.slice(1, 7), ...data.slice(1, 7)]);
+    [history_rows] = await db.query(history_sql, [...data.slice(1, 11), ...data.slice(1, 11)]);
     output.history = history_rows
 
     res.json(output);
