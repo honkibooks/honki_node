@@ -239,9 +239,11 @@ router.post('/other-add', async (req, res) => {
 // 隨機交換 edit(U) 寫入抽到的號碼(=修改單子) 功能OK
 router.post('/random/:c_sid?', async (req, res)=>{
   // 抓localstorage的userId，要寫入member_sid_o欄位
-  const sid = req.body.userId
+  const sid = parseInt(req.body.userId)
+  const c_sid = parseInt(req.params.c_sid)
   // const sid = 1
-  console.log(sid)
+  console.log('sid', req.body.userId)
+  console.log('req.params.c_sid',c_sid)
 
   // 隨機數字要1到多少就改多少
 // const p = Math.floor(Math.random() * 10) + 1
@@ -253,7 +255,7 @@ router.post('/random/:c_sid?', async (req, res)=>{
   // 撈出狀態1的所有單子&會員編號不等於1的單子 並隨機找一筆，寫入我的交換單Match_c_sid欄位，然後我的單子從狀態0變成狀態1，下去魚池
   const sql = "UPDATE `secondhand_normalchange` SET `Match_c_sid`=(SELECT `c_sid` FROM `secondhand_normalchange` WHERE `status`=1 AND `member_sid_o`!=? ORDER BY RAND() LIMIT 1), `status`=1 WHERE c_sid=?";
 
-  const [Row] = await db.query(sql,[sid,req.params.c_sid]);
+  const [Row] = await db.query(sql, [ sid, c_sid ]);
   console.log(Row)
   res.json({
       // success: !changedRows,
@@ -270,8 +272,8 @@ router.post('/random/:c_sid?', async (req, res)=>{
 
   // 把我交換單的Match_c_sid 的值對到那張單的c_sid 去改變它的狀態變成2(被抽起離開魚池)
   const sql2 = "UPDATE `secondhand_normalchange` SET `status`=2 WHERE c_sid=(SELECT s2.`c_sid` FROM `secondhand_normalchange` s JOIN `secondhand_normalchange` s2 ON s.`Match_c_sid`=s2.`c_sid` WHERE s.c_sid=?)";
-  const [Row2] = await db.query(sql2,[req.params.c_sid]);
-  console.log(Row)
+  const [Row2] = await db.query(sql2, c_sid);
+  console.log(Row2)
   res.json({
       Row2,
       
