@@ -76,22 +76,25 @@ router.post("/register", async (req, res) => {
   const sql =
     "INSERT INTO `member`( `name`, `nickname`, `email`, `mobile`, `address`, `birthday`, `password`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
 
-  //顯示資料在頁面上
-  const [{ affectedRows }] = await db.query(sql, [
-    name,
-    nickname,
-    email,
-    mobile,
-    address,
-    birthday,
-    password,
-  ]);
+  try {
+    //顯示資料在頁面上
+    const [{ affectedRows }] = await db.query(sql, [
+      name,
+      nickname,
+      email,
+      mobile,
+      address,
+      birthday,
+      password,
+    ]);
 
-  console.log;
-  if (!!affectedRows) {
-    output.success = true;
-    output.message = "新增成功";
-  } else {
+    if (!!affectedRows) {
+      output.success = true;
+      output.message = "新增成功";
+    } else {
+      output.message = "新增失敗";
+    }
+  } catch (e) {
     output.message = "新增失敗";
   }
 
@@ -105,9 +108,8 @@ router.get("/edit/:sid", async (req, res) => {
   const [rows] = await db.query("SELECT * FROM `member` WHERE `sid` = ?", [
     req.params.sid,
   ]);
-  // res.json({
-  //   success: req.params.sid,
-  // });
+
+  
 
   if (rows.length === 1) {
     // req.session.member = rows[0];
@@ -151,12 +153,17 @@ router.post("/edit/:sid", async (req, res) => {
     req.params.sid,
   ]);
 
-  console.log;
+  const [rows] = await db.query("SELECT * FROM `member` WHERE `sid` = ?", [
+    req.params.sid,
+  ]);
+
+  console.log(affectedRows);
   if (!!affectedRows) {
+    output.body = rows[0];
     output.success = true;
-    output.message = "新增成功";
+    output.message = "修改成功";
   } else {
-    output.message = "新增失敗";
+    output.message = "修改失敗";
   }
 
   res.json(output);
@@ -176,10 +183,7 @@ router.post("/editnewpassword", async (req, res) => {
 
   const sql = "UPDATE `member` SET `password`=? WHERE `sid`=?";
 
-  const [{ affectedRows }] = await db.query(sql, [
-   editNewPassword,
-   sid
-  ]);
+  const [{ affectedRows }] = await db.query(sql, [editNewPassword, sid]);
 
   console.log;
   if (!!affectedRows) {
@@ -203,24 +207,21 @@ router.post('/editdeleteaccount', async (req, res) => {
 
   const sid = req.body.sid;
   const editDeleteAccount = req.body.password;
-  
+
   const sql = "DELETE FROM `member` WHERE `sid`=? AND `password`=?";
 
-  const [{ affectedRows }] = await db.query(sql, [
-    sid,
-    editDeleteAccount
-  ]);
+  const [{ affectedRows }] = await db.query(sql, [sid, editDeleteAccount]);
 
-   console.log;
-   if (!!affectedRows) {
-     output.success = true;
-     output.message = "刪除成功";
-   } else {
-     output.message = "刪除失敗";
-   }
- 
-   res.json(output);
- });
+  console.log;
+  if (!!affectedRows) {
+    output.success = true;
+    output.message = "刪除成功";
+  } else {
+    output.message = "刪除失敗";
+  }
+
+  res.json(output);
+});
 
 //=============bookshelf=============
 
