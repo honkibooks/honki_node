@@ -185,7 +185,6 @@ router.post("/editnewpassword", async (req, res) => {
 
   const [{ affectedRows }] = await db.query(sql, [editNewPassword, sid]);
 
-  console.log;
   if (!!affectedRows) {
     output.success = true;
     output.message = "更新成功";
