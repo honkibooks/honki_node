@@ -13,7 +13,7 @@ const getSolarTerms = async (req) => {
   output.solar_term_list = solarTerms;
 
   const [solarTermsBooks] = await db.query(
-    "SELECT solar_term_books.sid as st_sid, solar_term_books.year, solar_term_books.solar_term_id, solar_term_books.this_year_happened, solar_term_books.why_this_book, solar_term_books.related_link, book_product.sid as book_sid, book_product.book_pics, book_product.title FROM solar_term_books INNER JOIN book_product ON solar_term_books.book_id=book_product.sid WHERE solar_term_books.visible=1"
+    "SELECT solar_term_books.sid as st_sid, solar_term_books.year, solar_term_books.solar_term_id, solar_term_books.this_year_happened, solar_term_books.why_this_book, solar_term_books.related_link, book_product.sid as book_sid, book_product.book_pics, book_product.title, book_product.book_overview FROM solar_term_books INNER JOIN book_product ON solar_term_books.book_id=book_product.sid WHERE solar_term_books.visible=1"
   );
   output.solar_term_books = solarTermsBooks;
 
