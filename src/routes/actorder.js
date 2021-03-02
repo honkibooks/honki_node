@@ -10,7 +10,7 @@ router.post('/', async(req, res)=>{
     const [rows] = await db.query(sql, sid);
 
     // console.log('post', sql, sid )
-    console.log('rows', rows )
+    // console.log('rows', rows )
 
     res.json({rows})
 });
