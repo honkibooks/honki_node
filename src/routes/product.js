@@ -134,8 +134,8 @@ router.get('/book/:sid?',async(req,res)=>{
     const [detail_rows] = await db.query(sql,[req.params.sid]);
     output.detail = detail_rows
 
-    const related_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.category_sid = ? ORDER BY RAND() LIMIT 10 ";
-    [related_rows] = await db.query(related_sql, [detail_rows[0].category_sid]);
+    const related_sql ="SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.category_sid = ? AND p.sid NOT IN (?) ORDER BY RAND() LIMIT 10 ";
+    [related_rows] = await db.query(related_sql, [detail_rows[0].category_sid, req.params.sid]);
     output.related = related_rows
 
     res.json(output);
