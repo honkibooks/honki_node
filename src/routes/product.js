@@ -32,18 +32,18 @@ const getProductList = async(req)=>{
 
     const category_sql = `AND c.eng_name='${category}'`;
 
-    const search_sql = `AND p.title LIKE '%${search}%' OR p.title_eng LIKE '%${search}%' OR p.publication LIKE '%${search}%' OR p.author LIKE '%${search}%' `;
-    const title_search_sql = `AND p.title LIKE '%${title_search}%' OR p.title_eng LIKE '%${title_search}%' `;
+    const search_sql = `AND (p.title LIKE '%${search}%' OR p.title_eng LIKE '%${search}%' OR p.publication LIKE '%${search}%' OR p.author LIKE '%${search}%') `;
+    const title_search_sql = `AND (p.title LIKE '%${title_search}%' OR p.title_eng LIKE '%${title_search}%') `;
     const author_search_sql = `AND p.author LIKE '%${author_search}%' `;
     const publication_search_sql = `AND p.publication LIKE '%${publication_search}%' `;
 
     const price_sql=`AND p.final_price BETWEEN ${minPrice ? minPrice : 0} AND ${maxPrice ? maxPrice : 10000} `;
 
     category ? sql += category_sql: sql; 
-    search ? sql += search_sql:sql;
-    title_search ? sql += title_search_sql:sql;
-    author_search ? sql += author_search_sql:sql;
-    publication_search ? sql += publication_search_sql:sql;
+    search ? sql += search_sql: sql;
+    title_search ? sql += title_search_sql: sql;
+    author_search ? sql += author_search_sql: sql;
+    publication_search ? sql += publication_search_sql: sql;
     (minPrice || maxPrice) ? sql += price_sql: sql;
     
 
