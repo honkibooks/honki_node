@@ -21,7 +21,7 @@ app.use(session({
   resave: false,
   // store: sessionStore,
   cookie: {
-      maxAge: 1800000
+      maxAge: 36000000
   }
 }));
 const corsOptions = {
