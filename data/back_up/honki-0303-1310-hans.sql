@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- 主機： localhost
--- 產生時間： 2021 年 03 月 03 日 06:07
--- 伺服器版本： 10.4.16-MariaDB
--- PHP 版本： 7.3.24
+-- Host: 127.0.0.1
+-- Generation Time: Mar 03, 2021 at 05:13 AM
+-- Server version: 10.4.16-MariaDB
+-- PHP Version: 7.3.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 資料庫： `honki`
+-- Database: `honki`
 --
 
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `act_categories`
+-- Table structure for table `act_categories`
 --
 
 CREATE TABLE `act_categories` (
@@ -33,7 +33,7 @@ CREATE TABLE `act_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `act_categories`
+-- Dumping data for table `act_categories`
 --
 
 INSERT INTO `act_categories` (`class_sid`, `class_name`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `act_categories` (`class_sid`, `class_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `book_categories`
+-- Table structure for table `book_categories`
 --
 
 CREATE TABLE `book_categories` (
@@ -57,7 +57,7 @@ CREATE TABLE `book_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `book_categories`
+-- Dumping data for table `book_categories`
 --
 
 INSERT INTO `book_categories` (`category_sid`, `name`, `eng_name`) VALUES
@@ -77,7 +77,7 @@ INSERT INTO `book_categories` (`category_sid`, `name`, `eng_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `book_favorites`
+-- Table structure for table `book_favorites`
 --
 
 CREATE TABLE `book_favorites` (
@@ -87,7 +87,7 @@ CREATE TABLE `book_favorites` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `book_favorites`
+-- Dumping data for table `book_favorites`
 --
 
 INSERT INTO `book_favorites` (`sid`, `member_sid`, `favorite_books_sid`) VALUES
@@ -102,7 +102,7 @@ INSERT INTO `book_favorites` (`sid`, `member_sid`, `favorite_books_sid`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `book_product`
+-- Table structure for table `book_product`
 --
 
 CREATE TABLE `book_product` (
@@ -132,7 +132,7 @@ CREATE TABLE `book_product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `book_product`
+-- Dumping data for table `book_product`
 --
 
 INSERT INTO `book_product` (`sid`, `book_pics`, `title`, `title_eng`, `author`, `publication`, `pub_year`, `ISBN`, `price`, `discount`, `final_price`, `category_sid`, `language`, `author_intro`, `book_overview`, `list`, `stock_num`, `readtrial`, `created_at`, `item_sid`, `stars`, `reviews`, `tag`) VALUES
@@ -387,7 +387,7 @@ INSERT INTO `book_product` (`sid`, `book_pics`, `title`, `title_eng`, `author`, 
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `book_review`
+-- Table structure for table `book_review`
 --
 
 CREATE TABLE `book_review` (
@@ -401,7 +401,7 @@ CREATE TABLE `book_review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `book_review`
+-- Dumping data for table `book_review`
 --
 
 INSERT INTO `book_review` (`sid`, `review_nickname`, `category`, `booktitle`, `ranking`, `review`, `creatdate`) VALUES
@@ -429,7 +429,7 @@ INSERT INTO `book_review` (`sid`, `review_nickname`, `category`, `booktitle`, `r
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `book_reviewlike`
+-- Table structure for table `book_reviewlike`
 --
 
 CREATE TABLE `book_reviewlike` (
@@ -439,7 +439,7 @@ CREATE TABLE `book_reviewlike` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `book_reviewlike`
+-- Dumping data for table `book_reviewlike`
 --
 
 INSERT INTO `book_reviewlike` (`sid`, `likesid`, `good`) VALUES
@@ -579,7 +579,7 @@ INSERT INTO `book_reviewlike` (`sid`, `likesid`, `good`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `book_review_comments`
+-- Table structure for table `book_review_comments`
 --
 
 CREATE TABLE `book_review_comments` (
@@ -596,7 +596,7 @@ CREATE TABLE `book_review_comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `book_review_comments`
+-- Dumping data for table `book_review_comments`
 --
 
 INSERT INTO `book_review_comments` (`sid`, `commentsid`, `review_nickname`, `comment`, `curFace`, `curHair`, `curTerms`, `curAcc`, `curCloth`, `writtentime`) VALUES
@@ -662,7 +662,7 @@ INSERT INTO `book_review_comments` (`sid`, `commentsid`, `review_nickname`, `com
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `book_review_comments_reply`
+-- Table structure for table `book_review_comments_reply`
 --
 
 CREATE TABLE `book_review_comments_reply` (
@@ -681,7 +681,7 @@ CREATE TABLE `book_review_comments_reply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `book_review_comments_reply`
+-- Dumping data for table `book_review_comments_reply`
 --
 
 INSERT INTO `book_review_comments_reply` (`sid`, `review_nickname`, `reply`, `replyid`, `curFace`, `curHair`, `curTerms`, `curAcc`, `curCloth`, `commentid`, `commentnickname`, `createtime`) VALUES
@@ -703,7 +703,7 @@ INSERT INTO `book_review_comments_reply` (`sid`, `review_nickname`, `reply`, `re
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `city`
+-- Table structure for table `city`
 --
 
 CREATE TABLE `city` (
@@ -712,7 +712,7 @@ CREATE TABLE `city` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `city`
+-- Dumping data for table `city`
 --
 
 INSERT INTO `city` (`city_sid`, `city`) VALUES
@@ -743,7 +743,7 @@ INSERT INTO `city` (`city_sid`, `city`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `delivery`
+-- Table structure for table `delivery`
 --
 
 CREATE TABLE `delivery` (
@@ -753,7 +753,7 @@ CREATE TABLE `delivery` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `delivery`
+-- Dumping data for table `delivery`
 --
 
 INSERT INTO `delivery` (`sid`, `delivery_options`, `delivery_fee`) VALUES
@@ -763,7 +763,7 @@ INSERT INTO `delivery` (`sid`, `delivery_options`, `delivery_fee`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `discount_codes`
+-- Table structure for table `discount_codes`
 --
 
 CREATE TABLE `discount_codes` (
@@ -779,7 +779,7 @@ CREATE TABLE `discount_codes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `discount_codes`
+-- Dumping data for table `discount_codes`
 --
 
 INSERT INTO `discount_codes` (`sid`, `title`, `dis_percentage`, `discount_code`, `created_at`, `created_by`, `capacity_limit`, `capacity`, `create_memo`) VALUES
@@ -788,7 +788,7 @@ INSERT INTO `discount_codes` (`sid`, `title`, `dis_percentage`, `discount_code`,
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `event`
+-- Table structure for table `event`
 --
 
 CREATE TABLE `event` (
@@ -810,7 +810,7 @@ CREATE TABLE `event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `event`
+-- Dumping data for table `event`
 --
 
 INSERT INTO `event` (`act_sid`, `act_name`, `act_time`, `act_price`, `event_city`, `act_location`, `act_about`, `act_transportation`, `act_notice`, `act_cancel_or_change`, `act_picture`, `act_limit_number`, `act_class_sid`, `act_city_sid`, `item_sid`) VALUES
@@ -977,7 +977,7 @@ INSERT INTO `event` (`act_sid`, `act_name`, `act_time`, `act_price`, `event_city
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `invoice`
+-- Table structure for table `invoice`
 --
 
 CREATE TABLE `invoice` (
@@ -986,7 +986,7 @@ CREATE TABLE `invoice` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `invoice`
+-- Dumping data for table `invoice`
 --
 
 INSERT INTO `invoice` (`sid`, `invoice_options`) VALUES
@@ -997,7 +997,7 @@ INSERT INTO `invoice` (`sid`, `invoice_options`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `item`
+-- Table structure for table `item`
 --
 
 CREATE TABLE `item` (
@@ -1006,7 +1006,7 @@ CREATE TABLE `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `item`
+-- Dumping data for table `item`
 --
 
 INSERT INTO `item` (`sid`, `item_name`) VALUES
@@ -1016,7 +1016,7 @@ INSERT INTO `item` (`sid`, `item_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `iwant`
+-- Table structure for table `iwant`
 --
 
 CREATE TABLE `iwant` (
@@ -1027,7 +1027,7 @@ CREATE TABLE `iwant` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `iwant`
+-- Dumping data for table `iwant`
 --
 
 INSERT INTO `iwant` (`sid`, `c_sid`, `member_sid`, `Iwant`) VALUES
@@ -1036,7 +1036,7 @@ INSERT INTO `iwant` (`sid`, `c_sid`, `member_sid`, `Iwant`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `member`
+-- Table structure for table `member`
 --
 
 CREATE TABLE `member` (
@@ -1055,7 +1055,7 @@ CREATE TABLE `member` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `member`
+-- Dumping data for table `member`
 --
 
 INSERT INTO `member` (`sid`, `name`, `nickname`, `email`, `mobile`, `address`, `birthday`, `level`, `gender`, `password`, `avatar`, `created_at`) VALUES
@@ -1113,7 +1113,7 @@ INSERT INTO `member` (`sid`, `name`, `nickname`, `email`, `mobile`, `address`, `
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `order`
+-- Table structure for table `order`
 --
 
 CREATE TABLE `order` (
@@ -1132,7 +1132,7 @@ CREATE TABLE `order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `order`
+-- Dumping data for table `order`
 --
 
 INSERT INTO `order` (`sid`, `member_sid`, `order_number`, `amonut`, `order_date`, `item_id`, `discount_id`, `delivery_sid`, `payment_sid`, `invoice_sid`, `recipient_sid`, `status_sid`) VALUES
@@ -1153,7 +1153,7 @@ INSERT INTO `order` (`sid`, `member_sid`, `order_number`, `amonut`, `order_date`
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `order_detail`
+-- Table structure for table `order_detail`
 --
 
 CREATE TABLE `order_detail` (
@@ -1169,7 +1169,7 @@ CREATE TABLE `order_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `order_detail`
+-- Dumping data for table `order_detail`
 --
 
 INSERT INTO `order_detail` (`sid`, `order_sid`, `product_sid`, `price`, `quantity`, `bookname`, `ISBN`, `book_id`, `act_time`) VALUES
@@ -1269,7 +1269,7 @@ INSERT INTO `order_detail` (`sid`, `order_sid`, `product_sid`, `price`, `quantit
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `order_status`
+-- Table structure for table `order_status`
 --
 
 CREATE TABLE `order_status` (
@@ -1278,7 +1278,7 @@ CREATE TABLE `order_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `order_status`
+-- Dumping data for table `order_status`
 --
 
 INSERT INTO `order_status` (`sid`, `order_status`) VALUES
@@ -1289,7 +1289,7 @@ INSERT INTO `order_status` (`sid`, `order_status`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `payment`
+-- Table structure for table `payment`
 --
 
 CREATE TABLE `payment` (
@@ -1298,7 +1298,7 @@ CREATE TABLE `payment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `payment`
+-- Dumping data for table `payment`
 --
 
 INSERT INTO `payment` (`sid`, `payment_options`) VALUES
@@ -1308,7 +1308,7 @@ INSERT INTO `payment` (`sid`, `payment_options`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `peoplewant`
+-- Table structure for table `peoplewant`
 --
 
 CREATE TABLE `peoplewant` (
@@ -1319,7 +1319,7 @@ CREATE TABLE `peoplewant` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `peoplewant`
+-- Dumping data for table `peoplewant`
 --
 
 INSERT INTO `peoplewant` (`sid`, `c_sid`, `member_sid`, `Peoplewant`) VALUES
@@ -1329,7 +1329,7 @@ INSERT INTO `peoplewant` (`sid`, `c_sid`, `member_sid`, `Peoplewant`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `recipient`
+-- Table structure for table `recipient`
 --
 
 CREATE TABLE `recipient` (
@@ -1358,7 +1358,7 @@ CREATE TABLE `recipient` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `recipient`
+-- Dumping data for table `recipient`
 --
 
 INSERT INTO `recipient` (`sid`, `recipient_name`, `recivePhone`, `reciveMail`, `reciveAdress`, `reciveTime`, `recipient_birthday`, `recipient_IDnumber`, `recipient_gender`, `recipient_food`, `recipient_otherNotice`, `order_number`, `recipient_trans`, `payment`, `invoice`, `userName`, `userTel`, `userMail`, `reciveCountry`, `reciveArea`, `recivePost`, `Member_ID`) VALUES
@@ -1387,7 +1387,7 @@ INSERT INTO `recipient` (`sid`, `recipient_name`, `recivePhone`, `reciveMail`, `
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `secondhand_normalchange`
+-- Table structure for table `secondhand_normalchange`
 --
 
 CREATE TABLE `secondhand_normalchange` (
@@ -1408,7 +1408,7 @@ CREATE TABLE `secondhand_normalchange` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `secondhand_normalchange`
+-- Dumping data for table `secondhand_normalchange`
 --
 
 INSERT INTO `secondhand_normalchange` (`c_sid`, `ISBN`, `book_name`, `book_condition`, `BC_pic1`, `BC_pic2`, `BC_pic3`, `written_or_not`, `status`, `Match_c_sid`, `member_sid_o`, `member_sid_n`, `created_at`, `modifed_at`) VALUES
@@ -1438,7 +1438,7 @@ INSERT INTO `secondhand_normalchange` (`c_sid`, `ISBN`, `book_name`, `book_condi
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `secondhand_randomchange`
+-- Table structure for table `secondhand_randomchange`
 --
 
 CREATE TABLE `secondhand_randomchange` (
@@ -1460,7 +1460,7 @@ CREATE TABLE `secondhand_randomchange` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `secondhand_randomchange`
+-- Dumping data for table `secondhand_randomchange`
 --
 
 INSERT INTO `secondhand_randomchange` (`r_sid`, `ISBN`, `book_name`, `book_condition`, `BC_pic1`, `BC_pic2`, `BC_pic3`, `written_or_not`, `message`, `status`, `Match_r_sid`, `member_sid_o`, `member_sid_n`, `created_at`, `modifed_at`) VALUES
@@ -1473,7 +1473,7 @@ INSERT INTO `secondhand_randomchange` (`r_sid`, `ISBN`, `book_name`, `book_condi
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `solar_terms`
+-- Table structure for table `solar_terms`
 --
 
 CREATE TABLE `solar_terms` (
@@ -1490,40 +1490,10 @@ CREATE TABLE `solar_terms` (
   `last_mod_memo` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- 傾印資料表的資料 `solar_terms`
---
-
-INSERT INTO `solar_terms` (`sid`, `visible`, `year`, `solar_term`, `st_img`, `st_desc`, `created_at`, `created_by`, `last_modified_at`, `last_modified_by`, `last_mod_memo`) VALUES
-(1, 1, '2020-01-06', '小寒', 'st-23.png', '小寒，是二十四節氣中的第二十三個節氣，每年在1月5-7日之間。對於中國而言，這時正值「三九」前後，小寒標誌著開始進入一年中最寒冷的日子。太陽漸向北移，北半球的白晝逐漸增長。農耕社會的腳步，總是緩慢而溫馴的。台灣中北部地區農作物此時發生低溫寒（霜）害的機會很高。蘇澳一帶之水域中會出現黑皮旗魚，白皮旗魚，四湖一帶水域也可捕獲旗魚。基隆、淡水、澎湖等海域，均可捕獲嘉膜、赤宗等高級鯛類。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(2, 1, '2020-01-20', '大寒', 'st-24.png', '大寒，是二十四節氣中的最後一個節氣，每年在1月19至21日之間。由於受到來自西伯利亞的寒流影響，東亞地區通常是一年中的最冷時期。近年氣象觀測記錄顯示，中國部分地區，大寒不如小寒冷，但在某些年份和沿海少數地方，全年最低氣溫仍然會出現在大寒節氣內。「大寒不寒，春分不暖」，意味著冬去春始來的景象。古人此時忙著造脯，釀酒，積糞，貯蠶草，為著過冬過年做準備，有古諺：「最喜大寒無雨雪，太平冬盡賀春來」。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(3, 1, '2020-02-04', '立春', 'st-01.png', '立春，是二十四節氣中的第一個節氣，在西曆每年 2 月 3 日至 5 日之間，表示著春天之開始。從此日到立夏這段期間，都稱為春季。由於台灣氣候暖和，立春時，中南部地區一期水稻已進行插秧，北部地區則為休耕或播種。立春又象徵春天開始的意思，因此人們常根據立春之天氣，預期未來一年之收成。二十四節氣的「節」一般都在月初，而「氣」則在月中，立春日在正月初一的情形，很少遇到，因此被稱為「百年難逢歲朝春」。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(4, 1, '2020-02-19', '雨水', 'st-02.png', '雨水，是二十四節氣中第二個節氣，在公曆每年2月18日-20日之間，表示雨水的增多。本節氣在中南部並未具實質意義，因為正常氣候下中南部地區均為晴天，而北部地區則因受東北季風影響，降雨機會較多，所謂「春雨綿綿」，正適合形容北部的天氣。雨水前後的民間節日，有正月十五為元宵節。元宵節又稱上元節或小過年，是整個春節活動最後的高潮。此日，家家戶戶備豐盛菜餚祭祀神明祖先，其隆重的程度與過年相同。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(5, 1, '2020-03-05', '驚蟄', 'st-03.png', '驚蟄，是二十四節氣中第三個節氣。動物昆蟲自入冬以來即藏伏土中，不飲不食，稱為「蟄」；這時天氣轉暖，大地春雷，而「驚蟄」即上天以打雷方式驚醒蟄居動物的冬眠。這時中國大部分地區進入春耕季節。該節氣在歷史上原本被稱為「啟蟄」，《夏小正》曰：「正月啟蟄」，本意為蟄蟲開始活動。漢朝漢景帝的諱為「啓」，為了避諱而將「啟」改為了當時發音不同但略近的「驚」字。在現在的漢字文化圈中，日本仍然使用「啟蟄」這個名稱。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(6, 1, '2020-03-20', '春分', 'st-04.png', '春分是二十四節氣之一，為春季九十天的中分點，公曆日期約略落於每年的3月21日前後（20日～22日）。古時又稱為「日中」、「日夜分」、「仲春之月」。「春分日夜對分」，白晝時間漸漸增長，農家子弟必須早起下田操作。春分時節氣候變化大，氣溫不穩定，因此人或作物極易於此時生病或感染病蟲害，如果下雨，人們才會注意到天氣的變化，增減衣物不至於生病，也會進行病蟲害防治，作物則生育良好。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(7, 1, '2020-04-04', '清明', 'st-05.png', '清明，是漢字文化圈傳統節日、農曆二十四節氣之一。就祭祖而言，除、清、盂、九四節也是中華傳統節日裏的「祭祖四大節」，每年陽曆4月4日或5日太陽到達黃經15°時開始，《歲時百問》中說：「萬物生長此時，皆清潔而明淨，故謂之清明。」《曆書》：「春分後十五日，斗指丁，為清明，時萬物皆潔齊而清明，蓋時當氣清景明，萬物皆顯，因此得名。」由於清明節是根據節氣而定的，故清明是少數與西曆大致吻合的中國傳統節日。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(8, 1, '2020-04-19', '穀雨', 'st-06.png', '穀雨，是二十四節氣中的第六個節氣，每年的農曆三月中，即陽曆4月19—21日。此節氣時天氣溫和，雨水明顯增多，對穀類作物的生長發育幫助很大。穀雨是春季的最後一個節氣，也是唯一將物候、時令與稼穡農事緊密對應的一個節氣。此時為水稻幼穗形成期，田區需水量較多，穀雨象徵著農民佈穀後望雨之心。「清明田，穀雨豆」，清明時插秧要結束，穀雨時，豆類要播種結束台灣北部地區的水稻業已插畢，南部的一期水稻則已抽穗開花。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(9, 1, '2020-05-05', '立夏', 'st-07.png', '立夏，是二十四節氣之一，標誌著夏天的到來，一般約在每年的5月5-7日之間，太陽位於黃經45°。與立春、立秋、立冬一樣，是標誌四季開始的日子。立夏之時太陽到達黃經45度，是夏天開始的時刻。夏季開始，早植稻已將進入抽穗期，病蟲害也開始活動侵染了。有關的農諺有：「初一落雨有花結無仔，初二落雨有穀做無米」，這天若下雨，以後雨水會多，但水稻易倒伏，開花無法授粉，收成會不好。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(10, 1, '2020-05-20', '小滿', 'st-08.png', '小滿，是二十四節氣之一，每年5月20-22日之間。《月令七十二候集解》：「四月中，小滿者，物至於此小得盈滿。」小滿——其含義是夏熟作物的籽粒開始灌漿飽滿，但還未成熟，只是小滿，還未大滿。農家，從莊稼的小滿里憧憬著夏收的殷實。這時北方夏熟作物子粒逐漸飽滿，早稻開始結穗，在禾稻上始見小粒的穀實，南方進入夏收夏種季節。台灣中南部地區水稻已屆抽穗末期，進入乳熟，黃熟期，小滿亦象徵著稻穀行將結實之意。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(11, 1, '2020-06-05', '芒種', 'st-09.png', '芒種，是二十四節氣之一，落在6月6日前後（5日－7日）。芒種一詞之意，是黃河流域地區在此時稻子已結實成「種」，而結實的稻子榖粒上長出了細芒。芒種也是農作物種植時間的分界點。風雨調順，則稻穀成穗，農民額手稱慶。此時天氣已熱，令人昏沈，有諺「有好食，就懶去」，形容人們懶得活動，即使美食當前，也不為所動。「芒種逢雷美亦然，端陽有雨是豐年」，則是指芒種的雨水是豐收的預兆。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(12, 1, '2020-06-21', '夏至', 'st-10.png', '夏至，是二十四節氣之一。每年6月21日前後（20日～22日）。是最早被確定的一個節氣。西元前7世紀，古人用土圭量日影，夏至這一天日影最短，因此把這一天稱作「夏至」。夏至日太陽幾乎直射北回歸線，北半球白晝最長。此日過後，陽光直射位置向南移動，北半球白晝逐漸減短，日出、日落的方位也開始往南移動。「夏至風颱就出世」，表示颱風季節即將來臨。夏至時，一般狀況梅雨已結束，而颱風的旺季也緊跟著來臨。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(13, 1, '2020-07-06', '小暑', 'st-11.png', '小暑，是中國傳統曆法中二十四節氣之一，在每年的7月6日-7月8日之間。節氣中有大小暑之分，象徵氣候之炎熱應有程序之分，若突然進入酷熱的氣候，作物則無法成長收穫，因為作物的成熟需要氣候因子相配合，供給必須之溫度、雨水等，「小暑吃芒果」，此時是芒果成熟期。在本節氣中，使台灣周圍海域持續在27℃～28℃水溫，屬暖水魚族之分布，東北海域（彭佳嶼）有鬼頭刀、魷魚、嘉腊，基隆北方外海有小卷、紅魽、赤宗等漁獲。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(14, 1, '2020-07-22', '大暑', 'st-12.png', '大暑，二十四節氣之一，北半球在每年7月22-24日之間。天氣最熱的時候，二期水稻開始插秧，田區需水量增加，若雨水不足，易發生乾旱，迫使休耕。然因颱風季節來臨，大風大雨往往會毀掉農民半年的辛勞所得，「大暑大落大死，無落無死」也表示大暑下雨之大小，對水稻生育影響很大。「大暑滿田先」、「大暑不見青」則表示田中谷物皆應成熟收割完畢。「大暑要熱透，才有好年冬」，表示大暑之炎熱，及象徵四時運轉應有其分。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(15, 1, '2020-08-07', '立秋', 'st-13.png', '立秋是二十四節氣中的第十三個節氣，每年在8月7-9日之間。預示著炎熱的夏天即將過去，秋季即將來臨。立秋以後，秋後下一次雨涼快一次，因而有「一場秋雨一場寒，十場秋雨要穿棉」的說法。早在周代，逢立秋那日，天子親率三公九卿諸侯大夫到西郊迎秋，舉行祭祀儀式。至漢代仍沿此俗。台灣農民們趕在立秋前後完成插秧工作，二期稻作生育末期若遭遇低溫，將影響稻穀的充實度而減低收穫量。「秋到早起差下午」，也是指插秧要及時。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(16, 1, '2020-08-22', '處暑', 'st-14.png', '處暑，是二十四節氣之一，在8月22日～24日。這時的三伏天氣已過或接近尾聲，所以稱「暑氣至此而止矣」。中國有「處暑寒來」的諺語，說明夏天的暑氣逐漸消退。 雖然是天氣開始變冷的時間點，曆書記載：「斗指戊為處暑，暑將退，伏而潛處，故名也」。所以有俗語說：爭秋奪暑，是指立秋和處暑之間的時間，雖然秋季在意義上已經來臨，但夏天的暑氣仍然未減，這段時期的酷熱天氣被稱作秋老虎。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(17, 1, '2020-09-07', '白露', 'st-15.png', '白露是二十四節氣中的第十五個節氣，每年在9月7-9日之間。《月令七十二候集解》中說：「八月節……陰氣漸重，露凝而白也。」 天氣漸轉涼，會在清晨時分發現地面和葉子上有許多露珠，這是因夜晚水氣凝結在上面，故名。古人以四時配五行，秋屬金，金色白，故以白形容秋露。進入「白露」之後，在晚上會感到一絲絲的涼意。有句俗話：「白露白迷迷，秋分稻秀齊。」意思是說，白露前後若有露，則晚稻將有好收成。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(18, 1, '2020-09-22', '秋分', 'st-16.png', '秋分，是二十四節氣之一 ，每年9月23日前後。《月令七十二候集解》：「八月中，解見秋分」、「分者平也，此當九十日之半，故謂之分。」分就是半，這是秋季九十天的中分點。秋分之後，北半球各地晝漸短夜漸長，南半球各地晝漸長夜漸短。秋分也是美好宜人的時節，風和日麗，秋高氣爽，丹桂飄香。春種秋收，唐詩人李紳的《憫農》說春種一粒粟，秋收萬顆子，春天開花，秋天結果。秋分時節結果纍纍，螃蟹魚蝦肥美，金菊正黃。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(19, 1, '2020-10-08', '寒露', 'st-17.png', '寒露，是二十四節氣中的第十七個節氣。每年新曆10月7日或8日，視太陽到達黃經195°時為寒露。《月令七十二候集解》中說：「九月節，露氣寒冷，將凝結也。」此時氣溫較「白露」時更低，露水更多，原先地面上潔白晶瑩的露水即將凝結成霜，寒意愈盛，故名。寒露也代表深秋的到來，氣候由涼爽逐漸轉入寒冷下雪。此時台灣二期水稻己至抽穗末期，進入黃熟期。「稻未出齊、拿犁來犁」，若稻出穗不齊，就得犁掉，無法收成。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(20, 1, '2020-10-23', '霜降', 'st-18.png', '霜降，含有天氣漸冷、開始降霜的意思，是二十四節氣中的第十八個節氣。每年九月底（西曆10月23日或24日）視太陽到達黃經210°時為霜降，節已入深秋，是秋季的最後一個節氣，一般來說此時中國大部分地區都能感受到變涼與寒意，夏季的酷暑已然全消，沿海地區颱風季節也跟著結束。本節氣在台灣之平地並無發生結霜之紀錄。此時二期稻作已至收割期，「二期到霜降，冬稻不受三朝降」，表示水稻完熟收穫應在霜降完成。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(21, 1, '2020-11-07', '立冬', 'st-19.png', '立冬，是二十四節氣之一，每年在11月6-8日之間，冬季自此開始。冬是終了的意思，秋季農作物全部收曬完畢，收藏入庫，動物也已藏起來準備冬眠。中國古代把立冬作為冬季的開始，大部分地區降水顯著減少。東北地區大地封凍，農林作物進入越冬期。江淮地區的「三秋」已接近尾聲。民間習俗以此時進補，意指一年辛勞，歷經寒暑，體力衰弱，進補以恢復元氣。台灣此時水稻收割已結束，「稻成熟，入冬田頭空」。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(22, 1, '2020-11-22', '小雪', 'st-20.png', '小雪，是二十四節氣之一，太陽位於黃經240°，每年約從11月21日或11月22日起開始，氣溫較之前下降，北方氣層在中國黃河區域溫度逐漸降到0℃以下，開始降雪，夜凍晝化，雪量則由小而大。此時台灣北部地區二期稻仍然收割當中，南部地區因氣候暖和，一期稻作可進行播種育苗，冬季裏作雜糧作物此時也可栽培，台灣唯有高山地區才有降雪的可能。處於亞熱帶的台灣，此時雖已入冬，有時氣溫還會很高，俗稱「十月小陽春」。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(23, 1, '2020-12-07', '大雪', 'st-21.png', '大雪，二十四節氣之一，每年在12月6至8日之間，北方地區會受冷空氣影響，常出現較大的降雪，引起地面積雪，大雪紛飛，此景象以中國北方可見。然而台灣南部仍可進行一期稻作育苗，北部地區因氣溫較低，二期稻作收割結束後，田區休閒。本節氣中，自淡水、彰化、台南、澎湖、高雄、東港等外海先後均可撈捕烏魚。因此從淡水、新竹、彰化等可捕獲闊腹鰆，其他有白腹，土托鰆等，台南以下至高雄、澎湖均可捕獲白腹，土托、疏齒鰆等。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。'),
-(24, 1, '2020-12-21', '冬至', 'st-22.png', '冬至，又稱冬節、賀冬，二十四節氣之一、八大天象類節氣之一。冬至日是一年中白晝最短之日，北半球冬至一般都在西曆12月21日到12月23日之間，農曆用冬至所在月來定義十一月。古代農耕時期，一年辛苦，期待秋收冬藏，穀物糧食積滿倉庫，人們在此時節休養進補恢復生息，準備過年的物品。民間習俗在冬至日吃湯圓，象徵圓滿、豐碩，並增添一年歲月。本節氣中，自淡水、彰化、台南、澎湖、高雄、東港等外海先後均可撈捕烏魚。', '2021-02-17 16:28:11', 'laohanj', '2021-02-17 16:28:11', 'laohanj', '通用節氣介紹，參考維基百科與農委會網站。');
-
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `solar_term_books`
+-- Table structure for table `solar_term_books`
 --
 
 CREATE TABLE `solar_term_books` (
@@ -1544,7 +1514,7 @@ CREATE TABLE `solar_term_books` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 傾印資料表的資料 `solar_term_books`
+-- Dumping data for table `solar_term_books`
 --
 
 INSERT INTO `solar_term_books` (`sid`, `visible`, `year`, `solar_term_id`, `book_id`, `this_year_happened`, `why_this_book`, `related_link`, `editor_memo`, `created_at`, `created_by`, `last_modified_at`, `last_modified_by`, `last_mod_memo`) VALUES
@@ -1561,7 +1531,7 @@ INSERT INTO `solar_term_books` (`sid`, `visible`, `year`, `solar_term_id`, `book
 (11, '1', '2020-06-05', 11, 66, ' this_year_happened 測試節氣選書資料庫9', 'why_this_book 測試節氣選書資料庫9', 'related_link 測試節氣選書資料庫9', '測試節氣選書資料庫。', '2021-01-30 20:51:53', 'laohanj', '2021-01-30 20:51:53', '', '測試節氣選書資料庫。'),
 (12, '1', '2020-06-21', 12, 86, ' this_year_happened 測試節氣選書資料庫10', 'why_this_book 測試節氣選書資料庫10', 'related_link 測試節氣選書資料庫10', '測試節氣選書資料庫。', '2021-01-30 20:51:53', 'laohanj', '2021-01-30 20:51:53', '', '測試節氣選書資料庫。'),
 (13, '1', '2020-07-06', 13, 122, ' this_year_happened 測試節氣選書資料庫11', 'why_this_book 測試節氣選書資料庫11', 'related_link 測試節氣選書資料庫11', '測試節氣選書資料庫。', '2021-01-30 20:51:53', 'laohanj', '2021-01-30 20:51:53', '', '測試節氣選書資料庫。'),
-(14, '1', '2020-07-22', 14, 137, ' this_year_happened 測試節氣選書資料庫12', 'why_this_book 測試節氣選書資料庫12', 'related_link 測試節氣選書資料庫12', '測試節氣選書資料庫。', '2021-01-30 20:51:53', 'laohanj', '2021-01-30 20:51:53', '', '測試節氣選書資料庫。'),
+(14, '1', '2020-07-22', 14, 135, ' this_year_happened 測試節氣選書資料庫12', 'why_this_book 測試節氣選書資料庫12', 'related_link 測試節氣選書資料庫12', '測試節氣選書資料庫。', '2021-01-30 20:51:53', 'laohanj', '2021-01-30 20:51:53', '', '測試節氣選書資料庫。'),
 (15, '1', '2020-08-07', 15, 153, ' this_year_happened 測試節氣選書資料庫13', 'why_this_book 測試節氣選書資料庫13', 'related_link 測試節氣選書資料庫13', '測試節氣選書資料庫。', '2021-01-30 20:51:53', 'laohanj', '2021-01-30 20:51:53', '', '測試節氣選書資料庫。'),
 (16, '1', '2020-08-22', 16, 170, ' this_year_happened 測試節氣選書資料庫14', 'why_this_book 測試節氣選書資料庫14', 'related_link 測試節氣選書資料庫14', '測試節氣選書資料庫。', '2021-01-30 20:51:53', 'laohanj', '2021-01-30 20:51:53', '', '測試節氣選書資料庫。'),
 (17, '1', '2020-09-07', 17, 178, ' this_year_happened 測試節氣選書資料庫15', 'why_this_book 測試節氣選書資料庫15', 'related_link 測試節氣選書資料庫15', '測試節氣選書資料庫。', '2021-01-30 20:51:53', 'laohanj', '2021-01-30 20:51:53', '', '測試節氣選書資料庫。'),
@@ -1581,320 +1551,320 @@ INSERT INTO `solar_term_books` (`sid`, `visible`, `year`, `solar_term_id`, `book
 (31, '1', '2021-03-05', 5, 18, '2020年03月上旬，敘利亞北部反對派根據地，在內戰後持續爆發衝突，繼2019年12月敘利亞西政府軍發動「伊德利卜黎明2號」行動後，已造成約100萬人流離失所。03月02日，台灣實名制口罩產能提升，成人口罩購買量增為7天內3片，兒童口罩增為7天內5片。03月11日，世界衛生組織宣布2019冠狀病毒病疫情已是全球大流行狀態。', '2021年在COVID-19疫情持續流行，許多產業受到劇烈影響，也影響許多人的生活。在後疫情時代，許多人可能面臨長短不一的隔離時間，也許是重新思考人生的時機。驚蟄是春耕插秧的日子，象徵變化的徵兆，驚蟄也有萬物重生意涵，作者辭去原本的工作，落腳新竹，展開了帶著全新的視野展開了農作的生活，跟著作者的體驗，或許讀者也能找到全新的自己。', '作者舊作諸如《原來，愛是這樣的》（皇冠，1997）《我在北美洲，途中下車》（皇冠，2002），《我對幸福沒誠意》（皇冠，2003），可略窺見作者生活轉變的軌跡。林務局出版的《林務局2021「生命之森 - 種間關係」手札》（2020），《好吃不過家常菜：韓良憶的廚房手帖》（今周刊，2020）等書也適合搭配閱讀。', '測試節氣選書資料庫。', '2021-01-30 20:51:53', 'laohanj', '2021-01-30 20:51:53', '', '測試節氣選書資料庫。');
 
 --
--- 已傾印資料表的索引
+-- Indexes for dumped tables
 --
 
 --
--- 資料表索引 `act_categories`
+-- Indexes for table `act_categories`
 --
 ALTER TABLE `act_categories`
   ADD PRIMARY KEY (`class_sid`),
   ADD KEY `city_sid` (`class_name`) USING BTREE;
 
 --
--- 資料表索引 `book_categories`
+-- Indexes for table `book_categories`
 --
 ALTER TABLE `book_categories`
   ADD PRIMARY KEY (`category_sid`);
 
 --
--- 資料表索引 `book_favorites`
+-- Indexes for table `book_favorites`
 --
 ALTER TABLE `book_favorites`
   ADD PRIMARY KEY (`sid`),
   ADD KEY `member_sid` (`member_sid`);
 
 --
--- 資料表索引 `book_product`
+-- Indexes for table `book_product`
 --
 ALTER TABLE `book_product`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `book_review`
+-- Indexes for table `book_review`
 --
 ALTER TABLE `book_review`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `book_reviewlike`
+-- Indexes for table `book_reviewlike`
 --
 ALTER TABLE `book_reviewlike`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `book_review_comments`
+-- Indexes for table `book_review_comments`
 --
 ALTER TABLE `book_review_comments`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `book_review_comments_reply`
+-- Indexes for table `book_review_comments_reply`
 --
 ALTER TABLE `book_review_comments_reply`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `city`
+-- Indexes for table `city`
 --
 ALTER TABLE `city`
   ADD PRIMARY KEY (`city_sid`);
 
 --
--- 資料表索引 `delivery`
+-- Indexes for table `delivery`
 --
 ALTER TABLE `delivery`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `discount_codes`
+-- Indexes for table `discount_codes`
 --
 ALTER TABLE `discount_codes`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `event`
+-- Indexes for table `event`
 --
 ALTER TABLE `event`
   ADD PRIMARY KEY (`act_sid`),
   ADD KEY `categories_sid` (`act_class_sid`) USING BTREE;
 
 --
--- 資料表索引 `invoice`
+-- Indexes for table `invoice`
 --
 ALTER TABLE `invoice`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `item`
+-- Indexes for table `item`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `iwant`
+-- Indexes for table `iwant`
 --
 ALTER TABLE `iwant`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `member`
+-- Indexes for table `member`
 --
 ALTER TABLE `member`
   ADD PRIMARY KEY (`sid`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- 資料表索引 `order`
+-- Indexes for table `order`
 --
 ALTER TABLE `order`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `order_detail`
+-- Indexes for table `order_detail`
 --
 ALTER TABLE `order_detail`
   ADD PRIMARY KEY (`sid`),
   ADD KEY `sid` (`sid`);
 
 --
--- 資料表索引 `order_status`
+-- Indexes for table `order_status`
 --
 ALTER TABLE `order_status`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `payment`
+-- Indexes for table `payment`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `peoplewant`
+-- Indexes for table `peoplewant`
 --
 ALTER TABLE `peoplewant`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `recipient`
+-- Indexes for table `recipient`
 --
 ALTER TABLE `recipient`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `secondhand_normalchange`
+-- Indexes for table `secondhand_normalchange`
 --
 ALTER TABLE `secondhand_normalchange`
   ADD PRIMARY KEY (`c_sid`);
 
 --
--- 資料表索引 `secondhand_randomchange`
+-- Indexes for table `secondhand_randomchange`
 --
 ALTER TABLE `secondhand_randomchange`
   ADD PRIMARY KEY (`r_sid`);
 
 --
--- 資料表索引 `solar_terms`
+-- Indexes for table `solar_terms`
 --
 ALTER TABLE `solar_terms`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `solar_term_books`
+-- Indexes for table `solar_term_books`
 --
 ALTER TABLE `solar_term_books`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `act_categories`
+-- AUTO_INCREMENT for table `act_categories`
 --
 ALTER TABLE `act_categories`
   MODIFY `class_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `book_categories`
+-- AUTO_INCREMENT for table `book_categories`
 --
 ALTER TABLE `book_categories`
   MODIFY `category_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `book_favorites`
+-- AUTO_INCREMENT for table `book_favorites`
 --
 ALTER TABLE `book_favorites`
   MODIFY `sid` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `book_product`
+-- AUTO_INCREMENT for table `book_product`
 --
 ALTER TABLE `book_product`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `book_review`
+-- AUTO_INCREMENT for table `book_review`
 --
 ALTER TABLE `book_review`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `book_reviewlike`
+-- AUTO_INCREMENT for table `book_reviewlike`
 --
 ALTER TABLE `book_reviewlike`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `book_review_comments`
+-- AUTO_INCREMENT for table `book_review_comments`
 --
 ALTER TABLE `book_review_comments`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `book_review_comments_reply`
+-- AUTO_INCREMENT for table `book_review_comments_reply`
 --
 ALTER TABLE `book_review_comments_reply`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `city`
+-- AUTO_INCREMENT for table `city`
 --
 ALTER TABLE `city`
   MODIFY `city_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `delivery`
+-- AUTO_INCREMENT for table `delivery`
 --
 ALTER TABLE `delivery`
   MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `discount_codes`
+-- AUTO_INCREMENT for table `discount_codes`
 --
 ALTER TABLE `discount_codes`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `event`
+-- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
   MODIFY `act_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `invoice`
+-- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
   MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `item`
+-- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
   MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `iwant`
+-- AUTO_INCREMENT for table `iwant`
 --
 ALTER TABLE `iwant`
   MODIFY `sid` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `member`
+-- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `order_detail`
+-- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `order_status`
+-- AUTO_INCREMENT for table `order_status`
 --
 ALTER TABLE `order_status`
   MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `payment`
+-- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
   MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `peoplewant`
+-- AUTO_INCREMENT for table `peoplewant`
 --
 ALTER TABLE `peoplewant`
   MODIFY `sid` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `recipient`
+-- AUTO_INCREMENT for table `recipient`
 --
 ALTER TABLE `recipient`
   MODIFY `sid` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `secondhand_normalchange`
+-- AUTO_INCREMENT for table `secondhand_normalchange`
 --
 ALTER TABLE `secondhand_normalchange`
   MODIFY `c_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `secondhand_randomchange`
+-- AUTO_INCREMENT for table `secondhand_randomchange`
 --
 ALTER TABLE `secondhand_randomchange`
   MODIFY `r_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `solar_terms`
+-- AUTO_INCREMENT for table `solar_terms`
 --
 ALTER TABLE `solar_terms`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `solar_term_books`
+-- AUTO_INCREMENT for table `solar_term_books`
 --
 ALTER TABLE `solar_term_books`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
