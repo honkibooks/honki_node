@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require(__dirname+'/../modules/db_connect');
 const upload = require(__dirname + "/../modules/upload-imgs");
+const session = require("express-session");
 
 //寫入訂單
 router.post('/cartInput/:sid', async (req, res)=>{
@@ -44,14 +45,14 @@ router.post('/cartInput1', upload.none(), async (req, res)=>{
 
     
     let cartItems = req.body;
-    console.log('req.body', req.body)
-    console.log('cartItems', cartItems)
-    console.log('cartItems.input', cartItems.input)
+    // console.log('req.body', req.body)
+    // console.log('cartItems', cartItems)
+    // console.log('cartItems.input', cartItems.input)
 
     // 建立訂單 recipient
     const [result] = await db.query("INSERT INTO `recipient` SET ?", [cartItems.input[0]])
-    console.log(result)
-    console.log(result.insertId)
+    // console.log(result)
+    // console.log(result.insertId)
     // 把訂單的編號抓過來(這裡你會遇到困難)
 
     // 建立品項
@@ -60,12 +61,19 @@ router.post('/cartInput1', upload.none(), async (req, res)=>{
         // order_items.order_sid = 訂單建好後的編號
         order_items.product_sid = items.book_sid
         order_items.quantity = items.amount
+        order_items.price = items.price
+        order_items.bookname = items.bookname
+        order_items.ISBN = items.ISBN
+        order_items.book_id= items.book_id
+     
+
         order_items.order_sid = result.insertId
         db.query("INSERT INTO `order_detail` SET ?", [order_items]);
     }) 
 
-    res.json(result.insertId)
-
+    req.session.lastInsertId5566= result.insertId
+    console.log('建立訂單的session', req.session.lastInsertId5566)
+    res.json({success:true})           
 
     // const {order_sid, product_sid, price, quantity, bookname,ISBN,book_id} = req.body;
     // const data = {order_sid, product_sid, price, quantity, bookname,ISBN,book_id};
@@ -86,8 +94,12 @@ router.post('/cartInput1', upload.none(), async (req, res)=>{
 
 
 //讀取訂單
-router.get('/order_detail/:order_sid', async (req, res)=>{
-    const [rows] = await db.query("SELECT * FROM `order_detail` WHERE order_sid=?", [ req.params.order_sid ]);
+// router.get('/order_detail/:order_sid', async (req, res)=>{
+router.get('/order_detail', async (req, res)=>{
+    const [rows] = await db.query("SELECT * FROM `order_detail` WHERE order_sid=?", [ req.session.lastInsertId5566 ]);
+    console.log('session: ', req.session)
+    console.log('前端送來的剛剛訂單:', req.session.lastInsertId5566)
+    console.log('888',rows)
     res.json(rows)
     // if(rows.length !== 1){
     //     return res.redirect( res.locals.baseUrl + '/cart' );
@@ -108,5 +120,18 @@ router.get('/order_detail/:order_sid', async (req, res)=>{
     //     });
     // }
 })
+
+
+
+//讀取訂單2
+// router.get('/order_detail/:order_sid', async (req, res)=>{
+    router.get('/order_detail_input', async (req, res)=>{
+        const [rows] = await db.query("SELECT * FROM `recipient` WHERE sid=?", [ req.session.lastInsertId5566 ]);
+        console.log('session: ', req.session)
+        console.log('前端送來的剛剛訂單:', req.session.lastInsertId5566)
+        console.log('888',rows)
+        res.json(rows)
+    
+    })
 
 module.exports = router;

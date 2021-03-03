@@ -2,17 +2,37 @@ require("dotenv").config();
 
 const express = require("express");
 const db = require(__dirname + "/modules/db_connect");
-
+const session = require("express-session")
 const app = express();
 const cors = require("cors");
 
 const multer = require("multer");
 // const upload = multer({dest: 'tmp_uploads/'});
 const upload = require(__dirname + "/modules/upload-imgs");
-app.use(cors());
+// app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static( 'public'));
+
+// AW多session的東西
+app.use(session({
+  secret: 'sdkjghoif39097894508tyighdsgkgiso',
+  saveUninitialized: false,
+  resave: false,
+  // store: sessionStore,
+  cookie: {
+      maxAge: 1800000
+  }
+}));
+const corsOptions = {
+  credentials: true,
+  origin: function(origin, cb){
+      console.log('origin:', origin);
+      cb(null, true);
+  }
+}
+
+app.use(cors(corsOptions));
 
 // test 首頁抓二手書隨機資料 json格式
 app.get("/", async (req, res) => {
