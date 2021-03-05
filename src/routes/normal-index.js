@@ -260,8 +260,6 @@ router.post('/random/:c_sid?', async (req, res)=>{
   res.json({
       // success: !changedRows,
       Row,
-      
- 
   });
 
   //  `status`=2 是已被抽走，書本離開魚池，不會再出現在魚池
@@ -276,7 +274,6 @@ router.post('/random/:c_sid?', async (req, res)=>{
   console.log(Row2)
   res.json({
       Row2,
-      
   });
 });
 
