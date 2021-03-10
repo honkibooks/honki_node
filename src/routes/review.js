@@ -22,7 +22,8 @@ const getMemberList = async(req) =>{
 
   const solarterm_sql = ` WHERE category LIKE "%${solarterm}%"`;
 
-  const search_sql = `WHERE category OR booktitle LIKE '%${search}%'`
+  const search_sql = `WHERE category LIKE '%${search}%' OR booktitle LIKE '%${search}%'`
+
   
   const member_sql = `WHERE review_nickname LIKE '%${member_search}%' `
 
