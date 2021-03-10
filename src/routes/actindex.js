@@ -7,27 +7,27 @@ router.get('/hot', async(req, res)=>{
     const sql_hot_l = "SELECT * FROM `event` WHERE `act_sid` IN ("
     const sql_hot_r = ") ORDER BY `act_sid` DESC"
 
-    //宣告亂數的function
+    // 宣告亂數的function
     function getRandom(x){
         return Math.floor(Math.random()*x)+1;
     };
-    //首先我們先宣告一個字串，用來裝要回傳的結果
+    // 首先我們先宣告一個字串，用來裝要回傳的結果
     let status = "";
-    //再來寫產生號碼的function
+    // 再來寫產生號碼的function
     function getPowerNum(){
-        //宣告一個變數用來裝隨機產生的數字
+        // 宣告一個變數用來裝隨機產生的數字
         let n = 0;
-        //卡片有6個所以我們讓迴圈跑六次
+        // 卡片有6個所以我們讓迴圈跑六次
         for(i=0;i<=5;i++){
-            //用indexOf判斷該數字之前有沒有出現過
+            // 用indexOf判斷該數字之前有沒有出現過
             n = getRandom(154);
             if(status.indexOf(n)>0){
-            //如果有出現過就重跑一次迴圈
+            // 如果有出現過就重跑一次迴圈
             i-=1;
             continue;
             }
             else{
-            //沒出現過的話就寫進字串裡
+            // 沒出現過的話就寫進字串裡
             status += n + ',';
             };
         };
@@ -83,47 +83,72 @@ router.get('/new', async(req, res)=>{
 
 // 總活動列表
 router.get('/', async(req, res)=>{
-    const perPage = 16;
-    const [t_rows]=await db.query("SELECT COUNT(1) num FROM `event`");
-    const totalRows = t_rows[0].num;
-    const totalPages = Math.ceil(totalRows/perPage);
-
-    // 排序
     // 分類：講座
     const talk = "SELECT * FROM `event` WHERE `act_class_sid` = 1 ORDER BY `act_sid` DESC LIMIT ?, ?";
+    // 講座活動總數
+    const [talkRows]=await db.query("SELECT COUNT(1) num FROM `event` WHERE `act_class_sid` = 1");
+    const talkRowsNum = talkRows[0].num;
+    
     // 分類：讀書會
     const book_club = "SELECT * FROM `event` WHERE `act_class_sid` = 2 ORDER BY `act_sid` DESC LIMIT ?, ?";
+    // 讀書會活動總數
+    const [bookClubRows]=await db.query("SELECT COUNT(1) num FROM `event` WHERE `act_class_sid` = 2");
+    const bookClubRowsNum = bookClubRows[0].num;
+    
     // 分類：戶外探索
     const outdoor = "SELECT * FROM `event` WHERE `act_class_sid` = 3 ORDER BY `act_sid` DESC LIMIT ?, ?";
+    // 戶外探索活動總數
+    const [outdoorRows]=await db.query("SELECT COUNT(1) num FROM `event` WHERE `act_class_sid` = 3");
+    const outdoorRowsNum = outdoorRows[0].num;
+
     // 分類：休閒活動
     const hang_out = "SELECT * FROM `event` WHERE `act_class_sid` = 4 ORDER BY `act_sid` DESC LIMIT ?, ?";
+    // 休閒活動活動總數
+    const [hangOutRows]=await db.query("SELECT COUNT(1) num FROM `event` WHERE `act_class_sid` = 4");
+    const hangOutRowsNum = hangOutRows[0].num;
+    
     // 分類：活動地區
     const area = "SELECT * FROM `event` WHERE `act_sid` ORDER BY `act_city_sid` ASC LIMIT ?, ?";
+    
     // 分類：節氣推薦
     const recommend = "SELECT * FROM `event` WHERE `act_class_sid` = 6 ORDER BY `act_sid` DESC LIMIT ?, ?";
+    // 節氣推薦活動總數
+    const [recommendRows]=await db.query("SELECT COUNT(1) num FROM `event` WHERE `act_class_sid` = 6");
+    const recommendRowsNum = recommendRows[0].num;
+    
     // 預設
     const all = "SELECT * FROM `event` ORDER BY `event`.`act_sid` DESC LIMIT ?, ?"
+    
+    // 總活動數量
+    const [t_rows]=await db.query("SELECT COUNT(1) num FROM `event`");
+    let totalRows = t_rows[0].num;
 
+    // 活動排序
     let selectClass = "";
     const changeClass = req.query.changeClass;
     switch(changeClass){
         case 'talk':
             selectClass = talk;
+            totalRows = talkRowsNum;
             break;
         case 'book_club':
             selectClass = book_club;
+            totalRows = bookClubRowsNum;
             break;
         case 'outdoor':
             selectClass = outdoor;
+            totalRows = outdoorRowsNum;
             break;
         case 'hang_out':
             selectClass = hang_out;
+            totalRows = hangOutRowsNum;
             break;
         case 'area':
             selectClass = area;
             break;
         case 'recommend':
             selectClass = recommend;
+            totalRows= recommendRowsNum;
             break;
         default:
             selectClass = all;
@@ -131,13 +156,22 @@ router.get('/', async(req, res)=>{
     console.log(selectClass)
 
 
-    // 如果query沒有頁數，就用1
+
+    // 每頁顯示16個
+    const perPage = 16;
+    
+    // 總頁數
+    const totalPages = Math.ceil(totalRows/perPage);
+    
     let rows = [];
+
+    // 如果query沒有頁數，就用1
     let page = parseInt(req.query.page) || 1;
+    
     if(totalRows>0){
     if (page<1) page = 1;
     if (page>totalPages) page = totalPages;
-    [rows]=await db.query(selectClass, [(page-1)*perPage, perPage]);
+    [rows] = await db.query(selectClass, [(page-1)*perPage, perPage]);
     }
 
     res.json({
