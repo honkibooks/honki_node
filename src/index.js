@@ -5,7 +5,6 @@ const db = require(__dirname + "/modules/db_connect");
 const session = require("express-session")
 const app = express();
 const cors = require("cors");
-const PORT = 3333;
 
 const multer = require("multer");
 // const upload = multer({dest: 'tmp_uploads/'});
@@ -26,19 +25,14 @@ app.use(session({
   }
 }));
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://wizardly-bassi-d73330.netlify.app'],
-  credentials: true,
-};
-const corsOptions = {
   credentials: true,
   origin: function(origin, cb){
-      // console.log('origin:', origin);
+      console.log('origin:', origin);
       cb(null, true);
   }
 }
 
-// app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
 
 // test 首頁抓二手書隨機資料 json格式
 app.get("/", async (req, res) => {
@@ -89,6 +83,7 @@ app.use((req, res) => {
   res.status(404).send("404-找不到網頁");
 });
 
-app.listen(process.env.PORT || PORT, () => {
-  console.log(`port: ${PORT}`);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`port: ${port}`);
 });
