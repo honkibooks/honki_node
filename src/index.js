@@ -5,6 +5,7 @@ const db = require(__dirname + "/modules/db_connect");
 const session = require("express-session")
 const app = express();
 const cors = require("cors");
+const PORT = 3333;
 
 const multer = require("multer");
 // const upload = multer({dest: 'tmp_uploads/'});
@@ -15,24 +16,24 @@ app.use(express.json());
 app.use(express.static( 'public'));
 
 // AW多session的東西
-app.use(session({
-  secret: 'sdkjghoif39097894508tyighdsgkgiso',
-  saveUninitialized: false,
-  resave: false,
-  // store: sessionStore,
-  cookie: {
-      maxAge: 36000000
-  }
-}));
-const corsOptions = {
-  credentials: true,
-  origin: function(origin, cb){
-      console.log('origin:', origin);
-      cb(null, true);
-  }
-}
+// app.use(session({
+//   secret: 'sdkjghoif39097894508tyighdsgkgiso',
+//   saveUninitialized: false,
+//   resave: false,
+//   // store: sessionStore,
+//   cookie: {
+//       maxAge: 36000000
+//   }
+// }));
+// const corsOptions = {
+//   credentials: true,
+//   origin: function(origin, cb){
+//       // console.log('origin:', origin);
+//       cb(null, true);
+//   }
+// }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // test 首頁抓二手書隨機資料 json格式
 app.get("/", async (req, res) => {
@@ -83,6 +84,6 @@ app.use((req, res) => {
   res.status(404).send("404-找不到網頁");
 });
 
-app.listen(process.env.PORT || 3333, () => {
-  console.log(`port: ${process.env.PORT}`);
+app.listen(process.env.PORT || PORT, () => {
+  console.log(`port: ${PORT}`);
 });
