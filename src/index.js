@@ -83,6 +83,6 @@ app.use((req, res) => {
   res.status(404).send("404-找不到網頁");
 });
 
-app.listen(process.env.PORT || PORT, () => {
+app.listen(process.env.PORT || 3333, () => {
   console.log(`port: ${PORT}`);
 });
