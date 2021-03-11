@@ -16,15 +16,19 @@ app.use(express.json());
 app.use(express.static( 'public'));
 
 // AW多session的東西
-// app.use(session({
-//   secret: 'sdkjghoif39097894508tyighdsgkgiso',
-//   saveUninitialized: false,
-//   resave: false,
-//   // store: sessionStore,
-//   cookie: {
-//       maxAge: 36000000
-//   }
-// }));
+app.use(session({
+  secret: 'sdkjghoif39097894508tyighdsgkgiso',
+  saveUninitialized: false,
+  resave: false,
+  // store: sessionStore,
+  cookie: {
+      maxAge: 36000000
+  }
+}));
+// const corsOptions = {
+//   origin: ['http://localhost:3000', 'https://wizardly-bassi-d73330.netlify.app'],
+//   credentials: true,
+// };
 // const corsOptions = {
 //   credentials: true,
 //   origin: function(origin, cb){
@@ -34,6 +38,7 @@ app.use(express.static( 'public'));
 // }
 
 // app.use(cors(corsOptions));
+app.use(cors());
 
 // test 首頁抓二手書隨機資料 json格式
 app.get("/", async (req, res) => {
@@ -62,8 +67,8 @@ app.use("/normal-index", require(__dirname + "/routes/normal-index"));
 //wei區
 app.use("/product", require(__dirname + "/routes/product"));
 //yen區
-app.use("/activity", require(__dirname + "/routes/actindex"));
-app.use("/member/actorder", require(__dirname + "/routes/actorder"));
+// app.use("/activity", require(__dirname + "/routes/actindex"));
+// app.use("/member/actorder", require(__dirname + "/routes/actorder"));
 //yu區
 app.use("/member", require(__dirname + "/routes/member"));
 
