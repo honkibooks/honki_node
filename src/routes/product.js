@@ -21,7 +21,7 @@ const getProductList = async(req)=>{
     // 分類
     // const category = req.query.category;
     const category = req.params.category;
-    // 搜尋
+    // 搜尋（全部、書名、作者、出版社）
     const search = req.query.search;
     const title_search = req.query.title_search;
     const author_search = req.query.author_search;
@@ -30,6 +30,7 @@ const getProductList = async(req)=>{
     const minPrice = req.query.minPrice;
     const maxPrice = req.query.maxPrice;
 
+    // sql語法
     const category_sql = `AND c.eng_name='${category}'`;
 
     const search_sql = `AND (p.title LIKE '%${search}%' OR p.title_eng LIKE '%${search}%' OR p.publication LIKE '%${search}%' OR p.author LIKE '%${search}%') `;
@@ -39,6 +40,7 @@ const getProductList = async(req)=>{
 
     const price_sql=`AND p.final_price BETWEEN ${minPrice ? minPrice : 0} AND ${maxPrice ? maxPrice : 10000} `;
 
+    // 若query存在，增加該條sql語法
     category ? sql += category_sql: sql; 
     search ? sql += search_sql: sql;
     title_search ? sql += title_search_sql: sql;
@@ -47,7 +49,7 @@ const getProductList = async(req)=>{
     (minPrice || maxPrice) ? sql += price_sql: sql;
     
 
-    // order by 系列 -----------
+    // order by 排序系列 -----------
     let sorts_sql = "";
     // 排序
     const sorts = req.query.sorts; 
@@ -84,14 +86,14 @@ const getProductList = async(req)=>{
         default:
             sorts_sql = (minPrice || maxPrice) ?  ` ORDER BY p.final_price ASC ` : ` ORDER BY p.sid DESC `;
     }
-
+    // 得商品平均價格
     const avgPrice = await db.query("SELECT AVG(p.final_price) AS avg FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE 1 " + sql )
 
     output.avgPrice = Math.round(+avgPrice[0][0].avg);
-
+    // 資料總筆數
     const [total_rows] = await db.query("SELECT COUNT(1) num FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE 1 " + sql )
     output.totalRows = total_rows[0].num;
-
+    // 分頁處理
     if(output.totalRows > 0){
         output.totalPages = Math.ceil(output.totalRows/output.perPage);
 
@@ -116,7 +118,7 @@ router.get('/:category', async (req, res)=>{
     res.json(output);
 })
 
-// 列表頁資料
+// 商品列表頁資料
 router.get('/', async (req, res)=>{
     const output = await getProductList(req);
     res.json(output);
@@ -148,9 +150,7 @@ router.post('/history',async(req,res)=>{
     const data=[...req.body, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     output.recent= [data.slice(0, 10)]
 
-    //  近期瀏覽
-    // SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (15, 80)
-    // const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?, ?, ?, ?, ?, ?) ";
+    //  近期瀏覽 選瀏覽紀錄 10本書
     const history_sql =" SELECT * FROM book_product p JOIN book_categories c ON p.category_sid = c.category_sid WHERE p.sid IN (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ORDER BY FIELD(p.sid, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
     
     [history_rows] = await db.query(history_sql, [...data.slice(1, 11), ...data.slice(1, 11)]);
@@ -159,9 +159,7 @@ router.post('/history',async(req,res)=>{
     res.json(output);
 })
 
-// 新增 or 修改 favorite book
-// req.body.sid = member_sid
-// req.body.favorite_books_sid = [20, 30, 50]
+// 新增 add favorite
 router.post('/favorite/addFavorite',async(req, res)=>{
     const sql = "INSERT INTO `book_favorites` (`member_sid`, `favorite_books_sid` ) VALUES (?, ?) "
     const sid = req.body.userId
@@ -175,7 +173,7 @@ router.post('/favorite/addFavorite',async(req, res)=>{
 // const sql = "INSERT INTO `book_favorites` (`member_sid`, `favorite_books_sid` ) VALUES (?, ?) ON DUPLICATE KEY UPDATE `favorite_books_sid` = VALUE(`favorite_books_sid`) "
 
 
-// remove favorite
+// 移除 remove favorite
 router.post('/favorite/removeFavorite',async(req, res)=>{
     const sql = "DELETE FROM `book_favorites` WHERE `member_sid` = ? AND `favorite_books_sid` = ? "
     const sid = req.body.userId
