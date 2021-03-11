@@ -25,17 +25,17 @@ app.use(session({
       maxAge: 36000000
   }
 }));
-// const corsOptions = {
-//   origin: ['http://localhost:3000', 'https://wizardly-bassi-d73330.netlify.app'],
-//   credentials: true,
-// };
-// const corsOptions = {
-//   credentials: true,
-//   origin: function(origin, cb){
-//       // console.log('origin:', origin);
-//       cb(null, true);
-//   }
-// }
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://wizardly-bassi-d73330.netlify.app'],
+  credentials: true,
+};
+const corsOptions = {
+  credentials: true,
+  origin: function(origin, cb){
+      // console.log('origin:', origin);
+      cb(null, true);
+  }
+}
 
 // app.use(cors(corsOptions));
 app.use(cors());
@@ -67,8 +67,8 @@ app.use("/normal-index", require(__dirname + "/routes/normal-index"));
 //wei區
 app.use("/product", require(__dirname + "/routes/product"));
 //yen區
-// app.use("/activity", require(__dirname + "/routes/actindex"));
-// app.use("/member/actorder", require(__dirname + "/routes/actorder"));
+app.use("/activity", require(__dirname + "/routes/actindex"));
+app.use("/member/actorder", require(__dirname + "/routes/actorder"));
 //yu區
 app.use("/member", require(__dirname + "/routes/member"));
 
