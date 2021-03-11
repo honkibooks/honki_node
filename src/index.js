@@ -84,5 +84,5 @@ app.use((req, res) => {
 });
 
 app.listen(process.env.PORT || 3333, () => {
-  console.log(`port: ${PORT}`);
+  console.log(`port: ${process.env.PORT}`);
 });
