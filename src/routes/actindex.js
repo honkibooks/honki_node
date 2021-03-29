@@ -153,7 +153,7 @@ router.get('/', async(req, res)=>{
         default:
             selectClass = all;
     }
-    console.log(selectClass)
+    // console.log(selectClass)
 
 
 
